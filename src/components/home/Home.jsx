@@ -60,8 +60,7 @@ const Home = () => {
 
   return (
     <Box>
-      {/* Test text */}
-      <Typography variant="h2">Home Component is Rendering!</Typography>
+
 
       {/* Banner Hero */}
       <Box sx={{
