@@ -40,6 +40,7 @@ const Layout = () => {
             flexGrow: 1,
             p: 3,
             marginLeft: '240px',
+            marginTop: '64px',
           }}
         >
           <Outlet />
