@@ -19,6 +19,10 @@ import SurveyList from './components/surveys/SurveyList';
 import { AuthProvider } from './contexts/AuthContext';
 import { CounselingProvider } from './contexts/CounselingContext';
 import theme from './theme';
+import AssessmentList from './components/assessment/AssessmentList';
+import AssessmentDetail from './components/assessment/AssessmentDetail';
+import CounselingList from './components/counseling/CounselingList';
+import CounselingDetail from './components/counseling/CounselingDetail';
 
 // Configure future flags for React Router v7
 const router = {
@@ -36,10 +40,13 @@ function App() {
         <CounselingProvider>
           <Router {...router}>
             <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
               <Route element={<Layout />}>
+                {/* Public Routes */}
                 <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                
+                {/* Protected Routes */}
                 <Route path="/profile" element={
                   <PrivateRoute>
                     <Profile />
@@ -49,9 +56,29 @@ function App() {
                 <Route path="/courses/:id" element={<CourseDetail />} />
                 <Route path="/surveys" element={<SurveyList />} />
                 <Route path="/surveys/:id" element={<SurveyDetail />} />
+                <Route path="/counseling" element={
+                  <PrivateRoute>
+                    <CounselingList />
+                  </PrivateRoute>
+                } />
+                <Route path="/counseling/:id" element={
+                  <PrivateRoute>
+                    <CounselingDetail />
+                  </PrivateRoute>
+                } />
                 <Route path="/counseling/schedule" element={
                   <PrivateRoute>
                     <CounselingSchedule />
+                  </PrivateRoute>
+                } />
+                <Route path="/assessment" element={
+                  <PrivateRoute>
+                    <AssessmentList />
+                  </PrivateRoute>
+                } />
+                <Route path="/assessment/:id" element={
+                  <PrivateRoute>
+                    <AssessmentDetail />
                   </PrivateRoute>
                 } />
                 <Route path="/programs" element={<ProgramList />} />

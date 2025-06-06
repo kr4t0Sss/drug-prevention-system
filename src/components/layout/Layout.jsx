@@ -34,7 +34,14 @@ const Layout = () => {
       <Header />
       <Box sx={{ display: 'flex', flex: 1 }}>
         <Sidebar />
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Box 
+          component="main" 
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            marginLeft: '240px',
+          }}
+        >
           <Outlet />
         </Box>
       </Box>
