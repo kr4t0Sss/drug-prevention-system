@@ -1,19 +1,18 @@
-import React from 'react';
 import {
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-} from '@mui/material';
-import {
-  Home as HomeIcon,
-  School as SchoolIcon,
-  Assessment as AssessmentIcon,
-  People as PeopleIcon,
+    Assessment as AssessmentIcon,
+    Home as HomeIcon,
+    People as PeopleIcon,
+    School as SchoolIcon,
 } from '@mui/icons-material';
-import { useNavigate, useLocation } from 'react-router-dom';
+import {
+    Divider,
+    Drawer,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+} from '@mui/material';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 
 const menuItems = [
   { text: 'Trang chủ', icon: <HomeIcon />, path: '/' },
@@ -41,10 +40,11 @@ const Sidebar = () => {
       <List>
         {menuItems.map((item) => (
           <ListItem
-            button
             key={item.text}
-            onClick={() => navigate(item.path)}
+            component={RouterLink}
+            to={item.path}
             selected={location.pathname === item.path}
+            sx={{ cursor: 'pointer' }}
           >
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.text} />
