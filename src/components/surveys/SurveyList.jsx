@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom';
 const SurveyList = () => {
   // Mock data - replace with actual data fetching
   const surveys = [
-    { id: 1, title: 'Initial Assessment Survey' },
-    { id: 2, title: 'Progress Evaluation Survey' },
-    { id: 3, title: 'Final Assessment Survey' },
+    { id: 1, title: 'Khảo sát nhận thức về ma túy' },
+    { id: 2, title: 'Khảo sát mức độ hiểu biết' },
+    { id: 3, title: 'Khảo sát đánh giá hiệu quả' },
   ];
 
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom>
-        Available Surveys
+        Khảo sát
       </Typography>
       <Paper elevation={3}>
         <List>
@@ -26,7 +26,7 @@ const SurveyList = () => {
             >
               <ListItemText
                 primary={survey.title}
-                secondary={`Survey ID: ${survey.id}`}
+                secondary={`Mã số: ${survey.id}`}
               />
             </ListItem>
           ))}

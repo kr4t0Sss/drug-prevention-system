@@ -39,32 +39,32 @@ const CounselingDetail = () => {
           setTimeout(() => resolve({
             id,
             counselor: {
-              name: 'Dr. Sarah Johnson',
-              specialization: 'Substance Abuse Counseling',
-              experience: '10 years',
+              name: 'Tiến sĩ Sarah Johnson',
+              specialization: 'Tư vấn lạm dụng chất gây nghiện',
+              experience: '10 năm kinh nghiệm',
             },
             date: new Date(),
             time: '14:00',
-            duration: '60 minutes',
-            location: 'Room 302, Counseling Center',
-            status: 'Scheduled',
-            type: 'Individual Session',
+            duration: '60 phút',
+            location: 'Phòng 302, Trung tâm tư vấn',
+            status: 'Đã lên lịch',
+            type: 'Phiên cá nhân',
             notes: [
-              'Initial assessment completed',
-              'Client expressed concerns about peer pressure',
-              'Discussed coping strategies',
+              'Đánh giá ban đầu đã hoàn thành',
+              'Khách hàng bày tỏ lo ngại về áp lực bạn bè',
+              'Đã thảo luận các chiến lược đối phó',
             ],
             goals: [
-              'Develop healthy coping mechanisms',
-              'Address peer pressure situations',
-              'Create a support network',
+              'Phát triển cơ chế đối phó lành mạnh',
+              'Giải quyết các tình huống áp lực bạn bè',
+              'Xây dựng mạng lưới hỗ trợ',
             ],
           }), 1000)
         );
         setSession(response);
         setLoading(false);
       } catch (err) {
-        setError('Failed to load session details');
+        setError('Không thể tải chi tiết phiên tư vấn');
         setLoading(false);
       }
     };
@@ -91,7 +91,7 @@ const CounselingDetail = () => {
   if (!session) {
     return (
       <Box p={3}>
-        <Alert severity="info">Session not found</Alert>
+        <Alert severity="info">Không tìm thấy phiên tư vấn</Alert>
       </Box>
     );
   }
@@ -102,7 +102,7 @@ const CounselingDetail = () => {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography variant="h4" gutterBottom>
-              Counseling Session Details
+              Chi tiết phiên tư vấn
             </Typography>
             <Divider sx={{ mb: 2 }} />
           </Grid>
@@ -112,7 +112,7 @@ const CounselingDetail = () => {
               <PersonIcon sx={{ mr: 1 }} />
               <Box>
                 <Typography variant="subtitle1" color="text.secondary">
-                  Counselor
+                  Tư vấn viên
                 </Typography>
                 <Typography variant="body1">
                   {session.counselor.name}
@@ -129,7 +129,7 @@ const CounselingDetail = () => {
               <CalendarIcon sx={{ mr: 1 }} />
               <Box>
                 <Typography variant="subtitle1" color="text.secondary">
-                  Date
+                  Ngày
                 </Typography>
                 <Typography variant="body1">
                   {format(new Date(session.date), 'PPP')}
@@ -143,7 +143,7 @@ const CounselingDetail = () => {
               <TimeIcon sx={{ mr: 1 }} />
               <Box>
                 <Typography variant="subtitle1" color="text.secondary">
-                  Time & Duration
+                  Thời gian & Thời lượng
                 </Typography>
                 <Typography variant="body1">
                   {session.time} ({session.duration})
@@ -157,7 +157,7 @@ const CounselingDetail = () => {
               <LocationIcon sx={{ mr: 1 }} />
               <Box>
                 <Typography variant="subtitle1" color="text.secondary">
-                  Location
+                  Địa điểm
                 </Typography>
                 <Typography variant="body1">
                   {session.location}
@@ -170,8 +170,8 @@ const CounselingDetail = () => {
             <Chip 
               label={session.status}
               color={
-                session.status === 'Completed' ? 'success' :
-                session.status === 'Cancelled' ? 'error' : 'primary'
+                session.status === 'Đã hoàn thành' ? 'success' :
+                session.status === 'Đã hủy' ? 'error' : 'primary'
               }
               sx={{ mb: 2 }}
             />
@@ -179,7 +179,7 @@ const CounselingDetail = () => {
 
           <Grid item xs={12}>
             <Typography variant="h6" gutterBottom>
-              Session Type
+              Loại phiên
             </Typography>
             <Typography variant="body1" paragraph>
               {session.type}
@@ -188,7 +188,7 @@ const CounselingDetail = () => {
 
           <Grid item xs={12} md={6}>
             <Typography variant="h6" gutterBottom>
-              Session Notes
+              Ghi chú phiên
             </Typography>
             <List>
               {session.notes.map((note, index) => (
@@ -204,7 +204,7 @@ const CounselingDetail = () => {
 
           <Grid item xs={12} md={6}>
             <Typography variant="h6" gutterBottom>
-              Treatment Goals
+              Mục tiêu điều trị
             </Typography>
             <List>
               {session.goals.map((goal, index) => (
@@ -221,10 +221,10 @@ const CounselingDetail = () => {
           <Grid item xs={12}>
             <Box display="flex" gap={2} mt={2}>
               <Button variant="contained" color="primary">
-                Reschedule
+                Đặt lịch lại
               </Button>
               <Button variant="outlined" color="error">
-                Cancel Session
+                Hủy phiên
               </Button>
             </Box>
           </Grid>

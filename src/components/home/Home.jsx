@@ -9,26 +9,26 @@ import ArticleIcon from '@mui/icons-material/Article';
 
 const featuredPosts = [
   {
-    title: 'How long do drugs stay in your system?',
-    description: 'Learn about detection times and how long different drugs can be found in your body.',
+    title: 'Ma túy tồn tại bao lâu trong cơ thể?',
+    description: 'Tìm hiểu về thời gian phát hiện và thời gian các loại ma túy khác nhau có thể được tìm thấy trong cơ thể bạn.',
     to: '/posts/1',
     icon: <ArticleIcon color="primary" sx={{ fontSize: 40 }} />,
   },
   {
-    title: 'Polydrug use',
-    description: 'Understand the risks of using multiple drugs at once and how to stay safe.',
+    title: 'Sử dụng đa chất',
+    description: 'Hiểu rõ rủi ro khi sử dụng nhiều loại ma túy cùng lúc và cách giữ an toàn.',
     to: '/posts/2',
     icon: <ArticleIcon color="primary" sx={{ fontSize: 40 }} />,
   },
   {
-    title: 'Alcohol',
-    description: 'Effects, risks, and prevention tips for alcohol use.',
+    title: 'Rượu',
+    description: 'Tác động, rủi ro và các mẹo phòng ngừa việc sử dụng rượu.',
     to: '/posts/3',
     icon: <ArticleIcon color="primary" sx={{ fontSize: 40 }} />,
   },
   {
-    title: 'Pharmaceutical',
-    description: 'Safe use of prescription drugs and how to avoid misuse.',
+    title: 'Thuốc tân dược',
+    description: 'Sử dụng thuốc kê đơn an toàn và cách tránh lạm dụng.',
     to: '/posts/4',
     icon: <ArticleIcon color="primary" sx={{ fontSize: 40 }} />,
   },
@@ -72,13 +72,13 @@ const Home = () => {
         boxShadow: 2,
       }}>
         <Typography variant="h3" component="h1" fontWeight={700} gutterBottom color="primary">
-          Drug Use Prevention Support System
+          Hệ thống phòng chống ma túy
         </Typography>
         <Typography variant="h5" color="text.secondary" sx={{ mb: 2 }}>
-          Together for a safer, healthier community
+          Chung tay xây dựng cộng đồng lành mạnh
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 600, mx: 'auto' }}>
-          Cung cấp thông tin, khóa học, đánh giá nguy cơ, tư vấn và các chương trình cộng đồng giúp phòng chống ma túy hiệu quả cho mọi người.
+          Nơi cung cấp kiến thức, kỹ năng và hỗ trợ toàn diện trong công tác phòng chống ma túy cho mọi người.
         </Typography>
       </Box>
 

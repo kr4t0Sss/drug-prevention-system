@@ -29,26 +29,26 @@ const AssessmentDetail = () => {
             type: 'CRAFFT',
             date: new Date(),
             score: 4,
-            riskLevel: 'Moderate',
+            riskLevel: 'Trung bình',
             answers: [
-              { question: 'Have you ever ridden in a CAR driven by someone who was high?', answer: 'Yes' },
-              { question: 'Do you ever use drugs to RELAX?', answer: 'Yes' },
-              { question: 'Do you ever use drugs while you are by yourself, ALONE?', answer: 'No' },
-              { question: 'Do you ever FORGET things you did while using drugs?', answer: 'No' },
-              { question: 'Do your family or FRIENDS ever tell you that you should cut down on your drug use?', answer: 'Yes' },
-              { question: 'Have you ever gotten into TROUBLE while you were using drugs?', answer: 'Yes' },
+              { question: 'Bạn đã bao giờ đi trong xe (ô tô, xe máy, thuyền, v.v.) do người nào đó đã sử dụng ma túy hoặc rượu lái chưa?', answer: 'Có' },
+              { question: 'Bạn có bao giờ dùng ma túy hoặc rượu để thư giãn, cảm thấy tốt hơn về bản thân, hoặc hòa nhập với mọi người không?', answer: 'Có' },
+              { question: 'Bạn có bao giờ dùng ma túy hoặc rượu khi ở một mình không?', answer: 'Không' },
+              { question: 'Bạn có bao giờ quên những điều bạn đã làm khi đang sử dụng ma túy hoặc rượu không?', answer: 'Không' },
+              { question: 'Gia đình hoặc bạn bè của bạn có bao giờ nói với bạn rằng bạn nên giảm sử dụng ma túy hoặc rượu không?', answer: 'Có' },
+              { question: 'Bạn đã bao giờ gặp rắc rối khi sử dụng ma túy hoặc rượu chưa?', answer: 'Có' },
             ],
             recommendations: [
-              'Consider reducing drug use',
-              'Schedule follow-up assessment',
-              'Consider counseling services'
+              'Cân nhắc giảm sử dụng ma túy',
+              'Lên lịch đánh giá tiếp theo',
+              'Cân nhắc các dịch vụ tư vấn'
             ]
           }), 1000)
         );
         setAssessment(response);
         setLoading(false);
       } catch (err) {
-        setError('Failed to load assessment details');
+        setError('Không thể tải chi tiết đánh giá');
         setLoading(false);
       }
     };
@@ -75,7 +75,7 @@ const AssessmentDetail = () => {
   if (!assessment) {
     return (
       <Box p={3}>
-        <Alert severity="info">Assessment not found</Alert>
+        <Alert severity="info">Không tìm thấy đánh giá</Alert>
       </Box>
     );
   }
@@ -86,14 +86,14 @@ const AssessmentDetail = () => {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography variant="h4" gutterBottom>
-              Assessment Details
+              Chi tiết đánh giá
             </Typography>
             <Divider sx={{ mb: 2 }} />
           </Grid>
 
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle1" color="text.secondary">
-              Assessment Type
+              Loại đánh giá
             </Typography>
             <Typography variant="body1" gutterBottom>
               {assessment.type}
@@ -102,7 +102,7 @@ const AssessmentDetail = () => {
 
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle1" color="text.secondary">
-              Date
+              Ngày
             </Typography>
             <Typography variant="body1" gutterBottom>
               {format(new Date(assessment.date), 'PPP')}
@@ -111,7 +111,7 @@ const AssessmentDetail = () => {
 
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle1" color="text.secondary">
-              Score
+              Điểm số
             </Typography>
             <Typography variant="body1" gutterBottom>
               {assessment.score}
@@ -120,20 +120,20 @@ const AssessmentDetail = () => {
 
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle1" color="text.secondary">
-              Risk Level
+              Mức độ rủi ro
             </Typography>
             <Chip 
               label={assessment.riskLevel}
               color={
-                assessment.riskLevel === 'High' ? 'error' :
-                assessment.riskLevel === 'Moderate' ? 'warning' : 'success'
+                assessment.riskLevel === 'Cao' ? 'error' :
+                assessment.riskLevel === 'Trung bình' ? 'warning' : 'success'
               }
             />
           </Grid>
 
           <Grid item xs={12}>
             <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-              Answers
+              Câu trả lời
             </Typography>
             <Divider sx={{ mb: 2 }} />
             {assessment.answers.map((item, index) => (
@@ -150,7 +150,7 @@ const AssessmentDetail = () => {
 
           <Grid item xs={12}>
             <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-              Recommendations
+              Khuyến nghị
             </Typography>
             <Divider sx={{ mb: 2 }} />
             {assessment.recommendations.map((recommendation, index) => (

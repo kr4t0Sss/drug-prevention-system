@@ -23,14 +23,14 @@ import { useAssessment } from '../../contexts/AssessmentContext';
 
 const getRiskLevelColor = (riskLevel) => {
   switch (riskLevel.toLowerCase()) {
-    case 'low':
-    case 'low risk':
+    case 'thấp':
+    case 'nguy cơ thấp':
       return 'success';
-    case 'moderate':
-    case 'medium risk':
+    case 'trung bình':
+    case 'nguy cơ trung bình':
       return 'warning';
-    case 'high':
-    case 'high risk':
+    case 'cao':
+    case 'nguy cơ cao':
       return 'error';
     default:
       return 'default';
@@ -42,19 +42,19 @@ const AssessmentHistory = () => {
   const { results, deleteResult } = useAssessment();
 
   const handleDownload = (result) => {
-    // Create a text version of the assessment result
+    // Tạo phiên bản báo cáo đánh giá dưới dạng văn bản
     const content = `
-Assessment Report
-Type: ${result.type}
-Date: ${result.date}
-Score: ${result.score}
-Risk Level: ${result.riskLevel}
+Báo cáo đánh giá
+Loại: ${result.type}
+Ngày: ${result.date}
+Điểm số: ${result.score}
+Mức độ rủi ro: ${result.riskLevel}
 
-Recommendations:
+Khuyến nghị:
 ${result.recommendations.map(rec => `- ${rec}`).join('\n')}
     `.trim();
 
-    // Create and trigger download
+    // Tạo và kích hoạt tải xuống
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -70,17 +70,17 @@ ${result.recommendations.map(rec => `- ${rec}`).join('\n')}
     return (
       <Box>
         <Typography variant="h4" gutterBottom>
-          Assessment History
+          Lịch sử đánh giá
         </Typography>
         <Alert severity="info" sx={{ mt: 2 }}>
-          You haven't taken any assessments yet. Take an assessment to start tracking your progress.
+          Bạn chưa thực hiện bài đánh giá nào. Hãy thực hiện một bài đánh giá để bắt đầu theo dõi tiến độ của mình.
         </Alert>
         <Button
           variant="contained"
           onClick={() => navigate('/assessment')}
           sx={{ mt: 3 }}
         >
-          Take an Assessment
+          Thực hiện đánh giá
         </Button>
       </Box>
     );
@@ -89,21 +89,21 @@ ${result.recommendations.map(rec => `- ${rec}`).join('\n')}
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
-        Assessment History
+        Lịch sử đánh giá
       </Typography>
       <Typography variant="body1" color="text.secondary" paragraph>
-        View and manage your past assessment results. You can download reports to share with healthcare providers.
+        Xem và quản lý kết quả các bài đánh giá trước đây của bạn. Bạn có thể tải xuống báo cáo để chia sẻ với các nhà cung cấp dịch vụ chăm sóc sức khỏe.
       </Typography>
 
       <TableContainer component={Paper} sx={{ mt: 3 }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Score</TableCell>
-              <TableCell>Risk Level</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell>Ngày</TableCell>
+              <TableCell>Loại</TableCell>
+              <TableCell>Điểm số</TableCell>
+              <TableCell>Mức độ rủi ro</TableCell>
+              <TableCell align="right">Hành động</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -122,13 +122,13 @@ ${result.recommendations.map(rec => `- ${rec}`).join('\n')}
                 <TableCell align="right">
                   <IconButton
                     onClick={() => handleDownload(result)}
-                    title="Download report"
+                    title="Tải xuống báo cáo"
                   >
                     <DownloadIcon />
                   </IconButton>
                   <IconButton
                     onClick={() => deleteResult(result.id)}
-                    title="Delete result"
+                    title="Xóa kết quả"
                     color="error"
                   >
                     <DeleteIcon />
@@ -142,12 +142,12 @@ ${result.recommendations.map(rec => `- ${rec}`).join('\n')}
 
       <Box sx={{ mt: 4, p: 3, bgcolor: 'background.paper', borderRadius: 1 }}>
         <Typography variant="h6" gutterBottom>
-          About Your Assessment History
+          Về lịch sử đánh giá của bạn
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          This history shows all assessments you've taken. Regular assessments can help track changes
-          in your risk levels and the effectiveness of prevention strategies. You can download reports
-          to share with healthcare providers or delete results you no longer want to keep.
+          Lịch sử này hiển thị tất cả các bài đánh giá bạn đã thực hiện. Đánh giá thường xuyên có thể giúp theo dõi sự thay đổi
+          trong mức độ rủi ro của bạn và hiệu quả của các chiến lược phòng ngừa. Bạn có thể tải xuống báo cáo
+          để chia sẻ với các nhà cung cấp dịch vụ chăm sóc sức khỏe hoặc xóa các kết quả mà bạn không muốn giữ nữa.
         </Typography>
       </Box>
     </Box>

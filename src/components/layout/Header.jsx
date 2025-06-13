@@ -8,13 +8,28 @@ import {
   Menu,
   MenuItem,
   Box,
+  Stack,
 } from '@mui/material';
-import { AccountCircle } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import {
+  AccountCircle,
+  Assessment as AssessmentIcon,
+  Home as HomeIcon,
+  People as PeopleIcon,
+  School as SchoolIcon,
+} from '@mui/icons-material';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+
+const menuItems = [
+  { text: 'Trang chủ', icon: <HomeIcon />, path: '/' },
+  { text: 'Khóa học', icon: <SchoolIcon />, path: '/courses' },
+  { text: 'Đánh giá', icon: <AssessmentIcon />, path: '/assessment' },
+  { text: 'Tư vấn', icon: <PeopleIcon />, path: '/counseling' },
+];
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, logout } = useAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -40,9 +55,29 @@ const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Typography variant="h6" component="div" sx={{ mr: 4 }}>
           Hệ thống phòng chống ma túy
         </Typography>
+        
+        <Stack direction="row" spacing={2} sx={{ flexGrow: 1 }}>
+          {menuItems.map((item) => (
+            <Button
+              key={item.text}
+              color="inherit"
+              startIcon={item.icon}
+              onClick={() => navigate(item.path)}
+              sx={{
+                backgroundColor: location.pathname === item.path ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                },
+              }}
+            >
+              {item.text}
+            </Button>
+          ))}
+        </Stack>
+
         {user ? (
           <Box>
             <IconButton

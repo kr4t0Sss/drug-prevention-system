@@ -9,13 +9,13 @@ const SurveyDetail = () => {
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ p: 3 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Survey Details
+          Chi tiết khảo sát
         </Typography>
         <Box sx={{ mt: 2 }}>
           <Typography variant="body1">
-            Survey ID: {id}
+            Mã khảo sát: {id}
           </Typography>
-          {/* Add survey questions and form here */}
+          {/* Thêm các câu hỏi và biểu mẫu khảo sát tại đây */}
         </Box>
       </Paper>
     </Container>

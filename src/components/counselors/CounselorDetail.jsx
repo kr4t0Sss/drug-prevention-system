@@ -11,13 +11,13 @@ const CounselorDetail = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             <Typography variant="h4" component="h1" gutterBottom>
-              Counselor Profile
+              Hồ sơ tư vấn viên
             </Typography>
             <Box sx={{ mt: 2 }}>
               <Typography variant="body1">
-                Counselor ID: {id}
+                Mã tư vấn viên: {id}
               </Typography>
-              {/* Add more counselor details here */}
+              {/* Thêm chi tiết tư vấn viên tại đây */}
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>
@@ -28,14 +28,14 @@ const CounselorDetail = () => {
                 fullWidth
                 sx={{ mb: 2 }}
               >
-                Schedule Appointment
+                Đặt lịch hẹn
               </Button>
               <Button
                 variant="outlined"
                 color="primary"
                 fullWidth
               >
-                Contact Counselor
+                Liên hệ tư vấn viên
               </Button>
             </Box>
           </Grid>

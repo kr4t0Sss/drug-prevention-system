@@ -26,28 +26,28 @@ import { useCounseling } from '../../contexts/CounselingContext';
 const counselors = {
   '1': {
     id: '1',
-    name: 'Dr. Sarah Johnson',
-    title: 'Licensed Clinical Psychologist',
+    name: 'Tiến sĩ Nguyễn Thị Hương',
+    title: 'Nhà tâm lý học lâm sàng có giấy phép',
     imageUrl: '/images/counselors/sarah-johnson.jpg',
     sessionTypes: ['video', 'in-person'],
   },
   '2': {
     id: '2',
-    name: 'Dr. Michael Chen',
-    title: 'Addiction Specialist',
+    name: 'Tiến sĩ Trần Văn Minh',
+    title: 'Chuyên gia về nghiện',
     imageUrl: '/images/counselors/michael-chen.jpg',
     sessionTypes: ['video'],
   },
   '3': {
     id: '3',
-    name: 'Lisa Rodriguez, LMHC',
-    title: 'Mental Health Counselor',
+    name: 'Lê Thị Hồng, ThS',
+    title: 'Cố vấn sức khỏe tâm thần',
     imageUrl: '/images/counselors/lisa-rodriguez.jpg',
     sessionTypes: ['video', 'in-person'],
   },
 };
 
-const steps = ['Session Type', 'Date & Time', 'Your Information', 'Confirmation'];
+const steps = ['Chọn loại phiên', 'Ngày & Giờ', 'Thông tin của bạn', 'Xác nhận'];
 
 const CounselingSchedule = () => {
   const { counselorId } = useParams();
@@ -70,10 +70,10 @@ const CounselingSchedule = () => {
     return (
       <Box sx={{ textAlign: 'center', py: 4 }}>
         <Typography variant="h6" color="text.secondary" gutterBottom>
-          Counselor not found
+          Không tìm thấy tư vấn viên
         </Typography>
         <Button variant="contained" onClick={() => navigate('/counseling')}>
-          Back to Counselors
+          Quay lại danh sách tư vấn viên
         </Button>
       </Box>
     );
@@ -118,11 +118,11 @@ const CounselingSchedule = () => {
 
   const handleSubmit = () => {
     if (selectedDate && selectedTime && sessionType) {
-      // Format date and time for storage
+      // Định dạng ngày và giờ để lưu trữ
       const formattedDate = selectedDate.format('YYYY-MM-DD');
       const formattedTime = selectedTime.format('HH:mm');
 
-      // Save the session
+      // Lưu phiên
       addSession({
         counselorId: counselor.id,
         sessionType,
@@ -137,13 +137,26 @@ const CounselingSchedule = () => {
     handleNext();
   };
 
+  const handleReset = () => {
+    setActiveStep(0);
+    setSessionType('');
+    setSelectedDate(null);
+    setSelectedTime(null);
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      concerns: '',
+    });
+  };
+
   const renderStepContent = () => {
     switch (activeStep) {
       case 0:
         return (
           <Box sx={{ mt: 3 }}>
             <FormControl component="fieldset">
-              <FormLabel component="legend">Select Session Type</FormLabel>
+              <FormLabel component="legend">Chọn loại phiên tư vấn</FormLabel>
               <RadioGroup
                 value={sessionType}
                 onChange={(e) => setSessionType(e.target.value)}
@@ -153,7 +166,7 @@ const CounselingSchedule = () => {
                     key={type}
                     value={type}
                     control={<Radio />}
-                    label={type === 'video' ? 'Video Session' : 'In-Person Session'}
+                    label={type === 'video' ? 'Phiên video' : 'Phiên trực tiếp'}
                   />
                 ))}
               </RadioGroup>
@@ -167,7 +180,7 @@ const CounselingSchedule = () => {
             <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 3 }}>
               <Box sx={{ width: '100%' }}>
                 <DatePicker
-                  label="Select Date"
+                  label="Chọn ngày"
                   value={selectedDate}
                   onChange={handleDateChange}
                   disablePast
@@ -175,7 +188,7 @@ const CounselingSchedule = () => {
               </Box>
               <Box sx={{ width: '100%' }}>
                 <TimePicker
-                  label="Select Time"
+                  label="Chọn giờ"
                   value={selectedTime}
                   onChange={handleTimeChange}
                 />
@@ -189,7 +202,7 @@ const CounselingSchedule = () => {
           <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
             <TextField
               required
-              label="Full Name"
+              label="Họ và tên"
               name="name"
               value={formData.name}
               onChange={handleInputChange}
@@ -206,14 +219,14 @@ const CounselingSchedule = () => {
             />
             <TextField
               required
-              label="Phone"
+              label="Số điện thoại"
               name="phone"
               value={formData.phone}
               onChange={handleInputChange}
               fullWidth
             />
             <TextField
-              label="Concerns or Questions"
+              label="Mối quan tâm hoặc câu hỏi"
               name="concerns"
               value={formData.concerns}
               onChange={handleInputChange}
@@ -228,96 +241,80 @@ const CounselingSchedule = () => {
         return (
           <Box sx={{ mt: 3 }}>
             <Alert severity="success" sx={{ mb: 3 }}>
-              Your session has been scheduled successfully!
+              Phiên tư vấn của bạn đã được đặt lịch thành công!
             </Alert>
             <Paper sx={{ p: 3 }}>
               <Typography variant="h6" gutterBottom>
-                Session Details
+                Chi tiết phiên tư vấn
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <Typography>
-                  <strong>Counselor:</strong> {counselor.name}
+                  <strong>Tư vấn viên:</strong> {counselor.name}
                 </Typography>
                 <Typography>
-                  <strong>Session Type:</strong> {sessionType === 'video' ? 'Video Session' : 'In-Person Session'}
+                  <strong>Loại phiên:</strong> {sessionType === 'video' ? 'Phiên video' : 'Phiên trực tiếp'}
                 </Typography>
                 <Typography>
-                  <strong>Date:</strong> {selectedDate ? selectedDate.format('MMMM D, YYYY') : ''}
+                  <strong>Ngày:</strong> {selectedDate ? selectedDate.format('DD/MM/YYYY') : ''}
                 </Typography>
                 <Typography>
-                  <strong>Time:</strong> {selectedTime ? selectedTime.format('h:mm A') : ''}
+                  <strong>Giờ:</strong> {selectedTime ? selectedTime.format('HH:mm') : ''}
+                </Typography>
+                <Typography>
+                  <strong>Mối quan tâm:</strong> {formData.concerns || 'Không có'}
                 </Typography>
                 <Divider />
-                <Typography>
-                  <strong>Your Name:</strong> {formData.name}
-                </Typography>
-                <Typography>
-                  <strong>Email:</strong> {formData.email}
-                </Typography>
-                <Typography>
-                  <strong>Phone:</strong> {formData.phone}
+                <Typography variant="body2" color="text.secondary">
+                  Một email xác nhận đã được gửi đến {formData.email}.
                 </Typography>
               </Box>
             </Paper>
           </Box>
         );
-
       default:
         return null;
     }
   };
 
   return (
-    <Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-        <Avatar
-          src={counselor.imageUrl}
-          alt={counselor.name}
-          sx={{ width: 80, height: 80, mr: 2 }}
-        />
+    <Box sx={{ p: 3, maxWidth: 800, mx: 'auto' }}>
+      <Typography variant="h4" component="h1" gutterBottom align="center">
+        Đặt lịch tư vấn
+      </Typography>
+      <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
+        <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+
         <Box>
-          <Typography variant="h4" gutterBottom>
-            Schedule a Session
-          </Typography>
-          <Typography variant="subtitle1" color="text.secondary">
-            with {counselor.name}, {counselor.title}
-          </Typography>
+          {renderStepContent()}
         </Box>
-      </Box>
 
-      <Stepper activeStep={activeStep} sx={{ mb: 4 }}>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-
-      {renderStepContent()}
-
-      <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between' }}>
-        <Button
-          onClick={handleBack}
-          disabled={activeStep === 0}
-        >
-          Back
-        </Button>
-        <Box>
+        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
           <Button
-            onClick={() => navigate('/counseling')}
+            color="inherit"
+            disabled={activeStep === 0}
+            onClick={handleBack}
             sx={{ mr: 1 }}
           >
-            Cancel
+            Quay lại
           </Button>
-          <Button
-            variant="contained"
-            onClick={activeStep === steps.length - 1 ? () => navigate('/counseling') : activeStep === steps.length - 2 ? handleSubmit : handleNext}
-            disabled={!isStepComplete()}
-          >
-            {activeStep === steps.length - 1 ? 'Done' : activeStep === steps.length - 2 ? 'Schedule Session' : 'Next'}
-          </Button>
+          <Box sx={{ flex: '1 1 auto' }} />
+          {activeStep === steps.length - 1 ? (
+            <Button variant="contained" onClick={handleReset}>
+              Hoàn thành
+            </Button>
+          ) : (
+            <Button variant="contained" onClick={handleNext} disabled={!isStepComplete()}>
+              Tiếp tục
+            </Button>
+          )}
         </Box>
-      </Box>
+      </Paper>
     </Box>
   );
 };

@@ -9,13 +9,13 @@ const CourseDetail = () => {
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ p: 3 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Course Details
+          Chi tiết khóa học
         </Typography>
         <Box sx={{ mt: 2 }}>
           <Typography variant="body1">
-            Course ID: {id}
+            Mã khóa học: {id}
           </Typography>
-          {/* Add more course details here */}
+          {/* Thêm chi tiết khóa học tại đây */}
         </Box>
       </Paper>
     </Container>

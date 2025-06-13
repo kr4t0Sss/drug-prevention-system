@@ -43,7 +43,7 @@ const programHistory = [
     id: 1,
     title: 'Chương trình giáo dục phòng chống ma túy cho học sinh',
     date: '2024-02-01',
-    status: 'completed',
+    status: 'hoàn thành',
     preSurvey: true,
     postSurvey: true,
   },
@@ -51,7 +51,7 @@ const programHistory = [
     id: 2,
     title: 'Hội thảo phòng chống ma túy cho phụ huynh',
     date: '2024-03-15',
-    status: 'registered',
+    status: 'đã đăng ký',
     preSurvey: false,
     postSurvey: false,
   },
@@ -78,7 +78,7 @@ const Profile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO: Implement profile update logic
-    console.log('Profile update:', formData);
+    console.log('Cập nhật hồ sơ:', formData);
   };
 
   const handleTabChange = (event, newValue) => {
@@ -174,8 +174,8 @@ const Profile = () => {
                     <TableCell>{appointment.topic}</TableCell>
                     <TableCell>
                       <Chip
-                        label={appointment.status === 'completed' ? 'Đã hoàn thành' : 'Sắp tới'}
-                        color={appointment.status === 'completed' ? 'success' : 'warning'}
+                        label={appointment.status === 'hoàn thành' ? 'Đã hoàn thành' : 'Sắp tới'}
+                        color={appointment.status === 'hoàn thành' ? 'success' : 'warning'}
                         size="small"
                       />
                     </TableCell>

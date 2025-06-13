@@ -12,6 +12,7 @@ import {
   Stack,
   TextField,
   Typography,
+  CardMedia,
 } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -91,11 +92,11 @@ const CourseList = () => {
       {/* Filters */}
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ mb: 4 }}>
         <FormControl sx={{ minWidth: 200 }}>
-          <InputLabel>Đối tượng</InputLabel>
+          <InputLabel>Đối tượng học</InputLabel>
           <Select
             name="target"
             value={filters.target}
-            label="Đối tượng"
+            label="Đối tượng học"
             onChange={handleFilterChange}
           >
             {targetGroups.map((group) => (
@@ -107,11 +108,11 @@ const CourseList = () => {
         </FormControl>
 
         <FormControl sx={{ minWidth: 200 }}>
-          <InputLabel>Cấp độ</InputLabel>
+          <InputLabel>Trình độ</InputLabel>
           <Select
             name="level"
             value={filters.level}
-            label="Cấp độ"
+            label="Trình độ"
             onChange={handleFilterChange}
           >
             {levels.map((level) => (
@@ -124,7 +125,7 @@ const CourseList = () => {
 
         <TextField
           name="search"
-          label="Tìm kiếm"
+          label="Tìm kiếm khóa học"
           value={filters.search}
           onChange={handleFilterChange}
           sx={{ minWidth: 200 }}
@@ -134,12 +135,18 @@ const CourseList = () => {
       {/* Course List */}
       <Grid container spacing={3}>
         {filteredCourses.map((course) => (
-          <Grid item xs={12} md={4} key={course.id}>
+          <Grid item xs={12} md={6} lg={4} key={course.id}>
             <Card>
+              <CardMedia
+                component="img"
+                height="140"
+                image={course.image}
+                alt={course.title}
+              />
               <CardContent>
                 <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
-                  <Chip label={course.target} color="primary" size="small" />
-                  <Chip label={course.level} color="secondary" size="small" />
+                  <Chip label={course.level} color="primary" size="small" />
+                  <Chip label={course.target} color="secondary" size="small" />
                 </Stack>
                 <Typography variant="h6" gutterBottom>
                   {course.title}
@@ -148,13 +155,13 @@ const CourseList = () => {
                   {course.description}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  Thời lượng: {course.duration}
+                  Thời gian học: {course.duration}
                 </Typography>
                 <Button
                   variant="contained"
                   onClick={() => navigate(`/courses/${course.id}`)}
                 >
-                  Xem chi tiết
+                  Xem nội dung
                 </Button>
               </CardContent>
             </Card>

@@ -20,7 +20,8 @@ import { AuthProvider } from './contexts/AuthContext';
 import { CounselingProvider } from './contexts/CounselingContext';
 import theme from './theme';
 import AssessmentList from './components/assessment/AssessmentList';
-import AssessmentDetail from './components/assessment/AssessmentDetail';
+import AssistAssessment from './components/assessment/AssistAssessment';
+import CrafftAssessment from './components/assessment/CrafftAssessment';
 import CounselingList from './components/counseling/CounselingList';
 import CounselingDetail from './components/counseling/CounselingDetail';
 
@@ -76,9 +77,14 @@ function App() {
                     <AssessmentList />
                   </PrivateRoute>
                 } />
-                <Route path="/assessment/:id" element={
+                <Route path="/assessment/assist" element={
                   <PrivateRoute>
-                    <AssessmentDetail />
+                    <AssistAssessment />
+                  </PrivateRoute>
+                } />
+                <Route path="/assessment/crafft" element={
+                  <PrivateRoute>
+                    <CrafftAssessment />
                   </PrivateRoute>
                 } />
                 <Route path="/programs" element={<ProgramList />} />

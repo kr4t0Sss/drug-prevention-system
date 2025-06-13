@@ -3,17 +3,17 @@ import { Container, Typography, Grid, Card, CardContent, CardActions, Button } f
 import { Link } from 'react-router-dom';
 
 const CounselorList = () => {
-  // Mock data - replace with actual data fetching
+  // Dữ liệu giả lập - thay thế bằng lệnh gọi API thực tế
   const counselors = [
-    { id: 1, name: 'Dr. Jane Smith', specialization: 'Substance Abuse' },
-    { id: 2, name: 'Dr. John Doe', specialization: 'Family Counseling' },
-    { id: 3, name: 'Dr. Sarah Johnson', specialization: 'Group Therapy' },
+    { id: 1, name: 'Tiến sĩ Nguyễn Thị Lan', specialization: 'Lạm dụng chất gây nghiện' },
+    { id: 2, name: 'Tiến sĩ Trần Văn Hùng', specialization: 'Tư vấn gia đình' },
+    { id: 3, name: 'Tiến sĩ Lê Thị Mai', specialization: 'Liệu pháp nhóm' },
   ];
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom>
-        Our Counselors
+        Các tư vấn viên của chúng tôi
       </Typography>
       <Grid container spacing={3}>
         {counselors.map((counselor) => (
@@ -34,7 +34,7 @@ const CounselorList = () => {
                   size="small"
                   color="primary"
                 >
-                  View Profile
+                  Xem hồ sơ
                 </Button>
               </CardActions>
             </Card>

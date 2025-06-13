@@ -27,7 +27,7 @@ const programs = [
     date: '2024-03-01',
     location: 'Trường THPT ABC',
     target: 'Học sinh',
-    status: 'active',
+    status: 'đang diễn ra',
     preSurvey: [
       'Bạn đã từng tham gia chương trình phòng chống ma túy chưa?',
       'Bạn có kiến thức về các loại ma túy không?',
@@ -46,7 +46,7 @@ const programs = [
     date: '2024-03-15',
     location: 'Hội trường XYZ',
     target: 'Phụ huynh',
-    status: 'upcoming',
+    status: 'sắp diễn ra',
     preSurvey: [
       'Bạn có kiến thức về các dấu hiệu sử dụng ma túy không?',
       'Bạn có kỹ năng giao tiếp với con về ma túy không?',
@@ -65,7 +65,7 @@ const programs = [
     date: '2024-04-01',
     location: 'Trung tâm Đào tạo',
     target: 'Giáo viên',
-    status: 'upcoming',
+    status: 'sắp diễn ra',
     preSurvey: [
       'Bạn có kiến thức về phòng chống ma túy không?',
       'Bạn có kỹ năng giảng dạy về phòng chống ma túy không?',
@@ -102,7 +102,7 @@ const ProgramList = () => {
 
   const handleSurveySubmit = () => {
     // TODO: Implement survey submission logic
-    console.log('Survey answers:', surveyAnswers);
+    console.log('Câu trả lời khảo sát:', surveyAnswers);
     handleSurveyClose();
   };
 
@@ -130,8 +130,8 @@ const ProgramList = () => {
                     size="small"
                   />
                   <Chip
-                    label={program.status === 'active' ? 'Đang diễn ra' : 'Sắp diễn ra'}
-                    color={program.status === 'active' ? 'success' : 'warning'}
+                    label={program.status === 'đang diễn ra' ? 'Đang diễn ra' : 'Sắp diễn ra'}
+                    color={program.status === 'đang diễn ra' ? 'success' : 'warning'}
                     size="small"
                   />
                 </Stack>
@@ -154,7 +154,7 @@ const ProgramList = () => {
                   >
                     Xem chi tiết
                   </Button>
-                  {program.status === 'active' && (
+                  {program.status === 'đang diễn ra' && (
                     <>
                       <Button
                         variant="outlined"
