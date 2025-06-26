@@ -17,11 +17,15 @@ import {
   Alert,
   Avatar,
   Divider,
+  Container,
+  Stack,
 } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import { useCounseling } from '../../contexts/CounselingContext';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable'; // Icon for scheduling
+import { Check, Schedule, Person, AssignmentTurnedIn } from '@mui/icons-material';
 
 const counselors = {
   '1': {
@@ -47,7 +51,12 @@ const counselors = {
   },
 };
 
-const steps = ['Chọn loại phiên', 'Ngày & Giờ', 'Thông tin của bạn', 'Xác nhận'];
+const steps = [
+  { label: 'Chọn loại phiên', icon: <Check /> },
+  { label: 'Ngày & Giờ', icon: <Schedule /> },
+  { label: 'Thông tin của bạn', icon: <Person /> },
+  { label: 'Xác nhận', icon: <AssignmentTurnedIn /> },
+];
 
 const CounselingSchedule = () => {
   const { counselorId } = useParams();
@@ -118,11 +127,9 @@ const CounselingSchedule = () => {
 
   const handleSubmit = () => {
     if (selectedDate && selectedTime && sessionType) {
-      // Định dạng ngày và giờ để lưu trữ
       const formattedDate = selectedDate.format('YYYY-MM-DD');
       const formattedTime = selectedTime.format('HH:mm');
 
-      // Lưu phiên
       addSession({
         counselorId: counselor.id,
         sessionType,
@@ -155,8 +162,8 @@ const CounselingSchedule = () => {
       case 0:
         return (
           <Box sx={{ mt: 3 }}>
-            <FormControl component="fieldset">
-              <FormLabel component="legend">Chọn loại phiên tư vấn</FormLabel>
+            <FormControl component="fieldset" fullWidth>
+              <FormLabel component="legend" sx={{ mb: 2, fontSize: '1.1rem', fontWeight: 'bold' }}>Chọn loại phiên tư vấn</FormLabel>
               <RadioGroup
                 value={sessionType}
                 onChange={(e) => setSessionType(e.target.value)}
@@ -165,8 +172,9 @@ const CounselingSchedule = () => {
                   <FormControlLabel
                     key={type}
                     value={type}
-                    control={<Radio />}
-                    label={type === 'video' ? 'Phiên video' : 'Phiên trực tiếp'}
+                    control={<Radio color="primary" />}
+                    label={<Typography variant="body1">{type === 'video' ? 'Phiên video trực tuyến' : 'Phiên trực tiếp tại văn phòng'}</Typography>}
+                    sx={{ mb: 1 }}
                   />
                 ))}
               </RadioGroup>
@@ -178,21 +186,19 @@ const CounselingSchedule = () => {
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 3 }}>
-              <Box sx={{ width: '100%' }}>
-                <DatePicker
-                  label="Chọn ngày"
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                  disablePast
-                />
-              </Box>
-              <Box sx={{ width: '100%' }}>
-                <TimePicker
-                  label="Chọn giờ"
-                  value={selectedTime}
-                  onChange={handleTimeChange}
-                />
-              </Box>
+              <DatePicker
+                label="Chọn ngày"
+                value={selectedDate}
+                onChange={handleDateChange}
+                disablePast
+                slotProps={{ textField: { fullWidth: true, variant: "outlined" } }}
+              />
+              <TimePicker
+                label="Chọn giờ"
+                value={selectedTime}
+                onChange={handleTimeChange}
+                slotProps={{ textField: { fullWidth: true, variant: "outlined" } }}
+              />
             </Box>
           </LocalizationProvider>
         );
@@ -207,6 +213,7 @@ const CounselingSchedule = () => {
               value={formData.name}
               onChange={handleInputChange}
               fullWidth
+              variant="outlined"
             />
             <TextField
               required
@@ -216,6 +223,7 @@ const CounselingSchedule = () => {
               value={formData.email}
               onChange={handleInputChange}
               fullWidth
+              variant="outlined"
             />
             <TextField
               required
@@ -224,6 +232,7 @@ const CounselingSchedule = () => {
               value={formData.phone}
               onChange={handleInputChange}
               fullWidth
+              variant="outlined"
             />
             <TextField
               label="Mối quan tâm hoặc câu hỏi"
@@ -233,6 +242,7 @@ const CounselingSchedule = () => {
               multiline
               rows={4}
               fullWidth
+              variant="outlined"
             />
           </Box>
         );
@@ -240,82 +250,109 @@ const CounselingSchedule = () => {
       case 3:
         return (
           <Box sx={{ mt: 3 }}>
-            <Alert severity="success" sx={{ mb: 3 }}>
+            <Alert severity="success" sx={{ mb: 3, fontSize: '1.1rem', fontWeight: 'bold' }}>
               Phiên tư vấn của bạn đã được đặt lịch thành công!
             </Alert>
-            <Paper sx={{ p: 3 }}>
-              <Typography variant="h6" gutterBottom>
+            <Paper sx={{ p: 3, borderRadius: 2, bgcolor: '#e8f5e9' }}>
+              <Typography variant="h6" gutterBottom fontWeight={600}>
                 Chi tiết phiên tư vấn
               </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <Typography>
-                  <strong>Tư vấn viên:</strong> {counselor.name}
-                </Typography>
-                <Typography>
-                  <strong>Loại phiên:</strong> {sessionType === 'video' ? 'Phiên video' : 'Phiên trực tiếp'}
-                </Typography>
-                <Typography>
-                  <strong>Ngày:</strong> {selectedDate ? selectedDate.format('DD/MM/YYYY') : ''}
-                </Typography>
-                <Typography>
-                  <strong>Giờ:</strong> {selectedTime ? selectedTime.format('HH:mm') : ''}
-                </Typography>
-                <Typography>
-                  <strong>Mối quan tâm:</strong> {formData.concerns || 'Không có'}
-                </Typography>
-                <Divider />
-                <Typography variant="body2" color="text.secondary">
-                  Một email xác nhận đã được gửi đến {formData.email}.
-                </Typography>
-              </Box>
+              <Divider sx={{ my: 2 }} />
+              <Stack spacing={1.5}>
+                <Typography variant="body1"><strong>Tư vấn viên:</strong> {counselor.name}</Typography>
+                <Typography variant="body1"><strong>Loại phiên:</strong> {sessionType === 'video' ? 'Phiên video trực tuyến' : 'Phiên trực tiếp tại văn phòng'}</Typography>
+                <Typography variant="body1"><strong>Ngày:</strong> {selectedDate ? selectedDate.format('DD/MM/YYYY') : 'N/A'}</Typography>
+                <Typography variant="body1"><strong>Thời gian:</strong> {selectedTime ? selectedTime.format('HH:mm') : 'N/A'}</Typography>
+                <Typography variant="body1"><strong>Tên của bạn:</strong> {formData.name}</Typography>
+                <Typography variant="body1"><strong>Email:</strong> {formData.email}</Typography>
+                <Typography variant="body1"><strong>Số điện thoại:</strong> {formData.phone}</Typography>
+                <Typography variant="body1"><strong>Mối quan tâm:</strong> {formData.concerns || 'Không có'}</Typography>
+              </Stack>
             </Paper>
           </Box>
         );
+
       default:
         return null;
     }
   };
 
   return (
-    <Box sx={{ p: 3, maxWidth: 800, mx: 'auto' }}>
-      <Typography variant="h4" component="h1" gutterBottom align="center">
-        Đặt lịch tư vấn
-      </Typography>
-      <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
+    <Container maxWidth="md" sx={{ py: 6 }}>
+      <Box sx={{ textAlign: 'center', mb: 6 }}>
+        <EventAvailableIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
+        <Typography variant="h3" component="h1" gutterBottom fontWeight={700} color="primary.dark">
+          Đặt lịch tư vấn
+        </Typography>
+        <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto', mb: 3 }}>
+          Điền vào biểu mẫu dưới đây để đặt lịch tư vấn với chuyên gia của chúng tôi.
+        </Typography>
+      </Box>
+
+      <Paper elevation={6} sx={{ p: { xs: 3, md: 5 }, borderRadius: 3, bgcolor: 'background.paper' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 4 }}>
+          <Avatar alt={counselor.name} src={counselor.imageUrl} sx={{ width: 80, height: 80, mb: 1 }} />
+          <Typography variant="h5" fontWeight={600}>{counselor.name}</Typography>
+          <Typography variant="body1" color="text.secondary">{counselor.title}</Typography>
+        </Box>
+
         <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
+          {steps.map((step, index) => (
+            <Step key={step.label}>
+              <StepLabel StepIconComponent={() => step.icon}>{step.label}</StepLabel>
             </Step>
           ))}
         </Stepper>
 
-        <Box>
-          {renderStepContent()}
-        </Box>
+        {renderStepContent()}
 
-        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 6 }}>
           <Button
-            color="inherit"
             disabled={activeStep === 0}
             onClick={handleBack}
-            sx={{ mr: 1 }}
+            variant="outlined"
+            size="large"
+            sx={{ px: 3, py: 1.2, borderColor: '#9e9e9e', color: '#616161', '&:hover': { borderColor: '#424242', color: '#424242' } }}
           >
             Quay lại
           </Button>
-          <Box sx={{ flex: '1 1 auto' }} />
           {activeStep === steps.length - 1 ? (
-            <Button variant="contained" onClick={handleReset}>
-              Hoàn thành
+            <Button
+              onClick={() => navigate('/')}
+              variant="contained"
+              size="large"
+              sx={{
+                backgroundColor: '#4caf50',
+                '&:hover': {
+                  backgroundColor: '#388e3c',
+                },
+                px: 4,
+                py: 1.2,
+              }}
+            >
+              Hoàn tất & Quay về trang chủ
             </Button>
           ) : (
-            <Button variant="contained" onClick={handleNext} disabled={!isStepComplete()}>
-              Tiếp tục
+            <Button
+              variant="contained"
+              onClick={isStepComplete() ? handleNext : () => alert('Vui lòng điền đầy đủ thông tin để tiếp tục!')}
+              disabled={!isStepComplete() && activeStep !== steps.length - 1} // Disable if not complete and not on last step
+              size="large"
+              sx={{
+                backgroundColor: '#2196f3',
+                '&:hover': {
+                  backgroundColor: '#1976d2',
+                },
+                px: 4,
+                py: 1.2,
+              }}
+            >
+              {activeStep === steps.length - 2 ? 'Xác nhận & Đặt lịch' : 'Tiếp theo'}
             </Button>
           )}
         </Box>
       </Paper>
-    </Box>
+    </Container>
   );
 };
 

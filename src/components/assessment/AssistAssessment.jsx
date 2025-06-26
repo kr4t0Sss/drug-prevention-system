@@ -10,8 +10,10 @@ import {
   LinearProgress,
   Alert,
   Stack,
+  Container,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import ScienceIcon from '@mui/icons-material/Science'; // Icon for ASSIST Assessment
 
 const questions = [
   {
@@ -86,9 +88,9 @@ const AssistAssessment = () => {
   };
 
   const getRiskLevel = (score) => {
-    if (score <= 3) return { level: 'Thấp', color: 'success', message: 'Nguy cơ sử dụng ma túy của bạn ở mức thấp.' };
-    if (score <= 7) return { level: 'Trung bình', color: 'warning', message: 'Bạn có nguy cơ sử dụng ma túy ở mức trung bình. Cân nhắc tìm kiếm tư vấn thêm.' };
-    return { level: 'Cao', color: 'error', message: 'Bạn có nguy cơ sử dụng ma túy ở mức cao. Bạn nên tìm kiếm sự giúp đỡ từ chuyên gia ngay lập tức.' };
+    if (score <= 3) return { level: 'Thấp', color: 'success', message: 'Nguy cơ sử dụng ma túy của bạn ở mức thấp. Hãy tiếp tục duy trì lối sống lành mạnh.' };
+    if (score <= 7) return { level: 'Trung bình', color: 'warning', message: 'Bạn có nguy cơ sử dụng ma túy ở mức trung bình. Cân nhắc tìm kiếm tư vấn thêm để được hỗ trợ.' };
+    return { level: 'Cao', color: 'error', message: 'Bạn có nguy cơ sử dụng ma túy ở mức cao. Bạn nên tìm kiếm sự giúp đỡ từ chuyên gia ngay lập tức và tham gia các chương trình hỗ trợ.' };
   };
 
   const handleSubmit = () => {
@@ -108,15 +110,29 @@ const AssistAssessment = () => {
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
 
   return (
-    <Box sx={{ p: 3, maxWidth: 800, mx: 'auto' }}>
-      <Typography variant="h4" component="h1" gutterBottom align="center">
-        Khảo sát ASSIST
-      </Typography>
-      <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
+    <Container maxWidth="md" sx={{ py: 6 }}>
+      <Box sx={{ textAlign: 'center', mb: 6 }}>
+        <ScienceIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
+        <Typography variant="h3" component="h1" gutterBottom fontWeight={700} color="primary.dark">
+          Bài đánh giá ASSIST
+        </Typography>
+        <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto', mb: 3 }}>
+          Bài đánh giá này giúp bạn nhận diện và hiểu rõ hơn về mức độ nguy cơ liên quan đến việc sử dụng các chất gây nghiện.
+        </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto' }}>
+          Vui lòng trả lời các câu hỏi một cách trung thực để nhận được kết quả chính xác nhất.
+        </Typography>
+      </Box>
+
+      <Paper elevation={6} sx={{ p: { xs: 3, md: 5 }, borderRadius: 3, bgcolor: 'background.paper' }}>
         {!showResults ? (
           <>
-            <LinearProgress variant="determinate" value={progress} sx={{ mb: 3, height: 10, borderRadius: 5 }} />
-            <Typography variant="h6" gutterBottom sx={{ mb: 3 }}>
+            <LinearProgress
+              variant="determinate"
+              value={progress}
+              sx={{ mb: 4, height: 12, borderRadius: 5, bgcolor: '#e0e0e0', '& .MuiLinearProgress-bar': { bgcolor: '#4caf50' } }}
+            />
+            <Typography variant="h5" gutterBottom sx={{ mb: 4, fontWeight: 'bold', color: 'text.primary' }}>
               Câu {currentQuestionIndex + 1}/{questions.length}: {currentQuestion.text}
             </Typography>
             <RadioGroup
@@ -127,17 +143,19 @@ const AssistAssessment = () => {
                 <FormControlLabel
                   key={option.value}
                   value={option.value}
-                  control={<Radio size="medium" />}
-                  label={<Typography variant="body1">{option.label}</Typography>}
-                  sx={{ mb: 1 }}
+                  control={<Radio size="medium" color="primary" />}
+                  label={<Typography variant="body1" sx={{ color: 'text.secondary' }}>{option.label}</Typography>}
+                  sx={{ mb: 1.5 }}
                 />
               ))}
             </RadioGroup>
-            <Stack direction="row" justifyContent="space-between" sx={{ mt: 4 }}>
+            <Stack direction="row" justifyContent="space-between" sx={{ mt: 5 }}>
               <Button
                 variant="outlined"
                 onClick={handlePrevious}
                 disabled={currentQuestionIndex === 0}
+                size="large"
+                sx={{ px: 3, py: 1.2, borderColor: '#9e9e9e', color: '#616161', '&:hover': { borderColor: '#424242', color: '#424242' } }}
               >
                 Câu trước
               </Button>
@@ -146,6 +164,15 @@ const AssistAssessment = () => {
                   variant="contained"
                   onClick={handleSubmit}
                   disabled={!answers[currentQuestion.id]}
+                  size="large"
+                  sx={{
+                    backgroundColor: '#2196f3',
+                    '&:hover': {
+                      backgroundColor: '#1976d2',
+                    },
+                    px: 4,
+                    py: 1.2,
+                  }}
                 >
                   Xem kết quả
                 </Button>
@@ -154,6 +181,15 @@ const AssistAssessment = () => {
                   variant="contained"
                   onClick={handleNext}
                   disabled={!answers[currentQuestion.id]}
+                  size="large"
+                  sx={{
+                    backgroundColor: '#2196f3',
+                    '&:hover': {
+                      backgroundColor: '#1976d2',
+                    },
+                    px: 4,
+                    py: 1.2,
+                  }}
                 >
                   Câu tiếp theo
                 </Button>
@@ -162,30 +198,57 @@ const AssistAssessment = () => {
           </>
         ) : (
           <Box textAlign="center">
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h4" gutterBottom fontWeight={700} color="primary.dark">
               Kết quả đánh giá của bạn
             </Typography>
-            <Alert severity={getRiskLevel(calculateScore()).color} sx={{ mb: 3, fontSize: '1.1rem' }}>
+            <Alert
+              severity={getRiskLevel(calculateScore()).color}
+              sx={{
+                mb: 3,
+                fontSize: '1.1rem',
+                fontWeight: 'bold',
+                py: 2,
+                textAlign: 'left',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
               {getRiskLevel(calculateScore()).message}
             </Alert>
-            <Typography variant="body1" paragraph sx={{ fontWeight: 'bold' }}>
-              Tổng điểm: {calculateScore()}
+            <Typography variant="h5" paragraph sx={{ fontWeight: 'bold', color: 'text.primary' }}>
+              Tổng điểm: <Box component="span" sx={{ color: '#4caf50' }}>{calculateScore()}</Box>
             </Typography>
-            <Typography variant="body1" paragraph sx={{ fontWeight: 'bold' }}>
-              Mức độ nguy cơ: {getRiskLevel(calculateScore()).level}
+            <Typography variant="h5" paragraph sx={{ fontWeight: 'bold', color: 'text.primary' }}>
+              Mức độ nguy cơ: <Box component="span" sx={{ color: getRiskLevel(calculateScore()).color === 'success' ? '#4caf50' : getRiskLevel(calculateScore()).color === 'warning' ? '#ff9800' : '#f44336' }}>{getRiskLevel(calculateScore()).level}</Box>
             </Typography>
             <Stack direction="row" justifyContent="center" spacing={2} sx={{ mt: 4 }}>
-              <Button variant="contained" onClick={handleReset}>
+              <Button
+                variant="contained"
+                onClick={handleReset}
+                size="large"
+                sx={{
+                  backgroundColor: '#2196f3',
+                  '&:hover': {
+                    backgroundColor: '#1976d2',
+                  },
+                }}
+              >
                 Làm lại khảo sát
               </Button>
-              <Button variant="outlined" onClick={() => navigate('/counseling')}>
+              <Button
+                variant="outlined"
+                onClick={() => navigate('/counseling')}
+                size="large"
+                sx={{ borderColor: '#2196f3', color: '#2196f3', '&:hover': { backgroundColor: 'rgba(33, 150, 243, 0.04)' } }}
+              >
                 Tìm hiểu thêm về tư vấn
               </Button>
             </Stack>
           </Box>
         )}
       </Paper>
-    </Box>
+    </Container>
   );
 };
 
