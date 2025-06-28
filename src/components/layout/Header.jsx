@@ -25,6 +25,7 @@ import {
   Person as PersonIcon,
   Logout as LogoutIcon,
   Shield as ShieldIcon,
+  Dashboard as DashboardIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -247,6 +248,27 @@ const Header = () => {
                 <ListItemText>
                   <Typography variant="body2" fontWeight={500}>
                     Hồ sơ cá nhân
+                  </Typography>
+                </ListItemText>
+              </MenuItem>
+              <MenuItem 
+                onClick={() => {
+                  navigate('/admin/dashboard');
+                  handleClose();
+                }}
+                sx={{
+                  py: 1.5,
+                  '&:hover': {
+                    backgroundColor: 'rgba(156, 39, 176, 0.08)',
+                  },
+                }}
+              >
+                <ListItemIcon>
+                  <DashboardIcon fontSize="small" sx={{ color: '#9c27b0' }} />
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography variant="body2" fontWeight={500} sx={{ color: '#9c27b0' }}>
+                    Admin Panel
                   </Typography>
                 </ListItemText>
               </MenuItem>

@@ -26,6 +26,11 @@ import CrafftAssessment from './components/assessment/CrafftAssessment';
 import CounselingList from './components/counseling/CounselingList';
 import CounselingDetail from './components/counseling/CounselingDetail';
 import Appointments from './components/Appointments';
+import AdminLayout from './components/admin/AdminLayout';
+import AdminDashboard from './components/admin/AdminDashboard';
+import UserManagement from './components/admin/UserManagement';
+import CourseManagement from './components/admin/CourseManagement';
+import AssessmentManagement from './components/admin/AssessmentManagement';
 
 // Configure future flags for React Router v7
 const router = {
@@ -98,6 +103,30 @@ function App() {
                 <Route path="/programs/:id" element={<ProgramDetail />} />
                 <Route path="/counselors" element={<CounselorList />} />
                 <Route path="/counselors/:id" element={<CounselorDetail />} />
+              </Route>
+              
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route path="dashboard" element={
+                  <PrivateRoute>
+                    <AdminDashboard />
+                  </PrivateRoute>
+                } />
+                <Route path="users" element={
+                  <PrivateRoute>
+                    <UserManagement />
+                  </PrivateRoute>
+                } />
+                <Route path="courses" element={
+                  <PrivateRoute>
+                    <CourseManagement />
+                  </PrivateRoute>
+                } />
+                <Route path="assessments" element={
+                  <PrivateRoute>
+                    <AssessmentManagement />
+                  </PrivateRoute>
+                } />
               </Route>
             </Routes>
           </Router>
