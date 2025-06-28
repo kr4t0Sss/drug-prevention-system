@@ -22,6 +22,7 @@ import {
   Work as WorkIcon,
   ConnectWithoutContact as ConnectWithoutContactIcon,
   Person as PersonIcon,
+  ArrowForwardIos as ArrowForwardIosIcon,
 } from '@mui/icons-material';
 
 const counselors = [
@@ -133,18 +134,17 @@ const CounselorList = () => {
                 <Button
                   component={Link}
                   to={`/counselors/${counselor.id}`}
-                  variant="outlined"
+                  variant="contained"
                   size="medium"
-                  startIcon={<PersonIcon />}
+                  startIcon={<ArrowForwardIosIcon />}
                   sx={{
                     textTransform: 'none',
                     fontWeight: 'bold',
-                    borderColor: '#2196f3',
-                    color: '#2196f3',
+                    bgcolor: '#2196f3',
                     '&:hover': {
-                      bgcolor: '#e3f2fd',
-                      borderColor: '#1976d2',
+                      bgcolor: '#1976d2',
                     },
+                    mr: 1,
                   }}
                 >
                   Xem hồ sơ

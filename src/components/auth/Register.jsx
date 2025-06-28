@@ -8,7 +8,14 @@ import {
   Link,
   Container,
   Alert,
+  InputAdornment,
 } from '@mui/material';
+import {
+  PersonAdd as PersonAddIcon,
+  Person as PersonIcon,
+  Email as EmailIcon,
+  Lock as LockIcon,
+} from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -22,6 +29,33 @@ const Register = () => {
     confirmPassword: '',
   });
   const [error, setError] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+
+  const validateName = (name) => {
+    if (!name) return 'Tên không được để trống.';
+    return '';
+  };
+
+  const validateEmail = (email) => {
+    if (!email) return 'Email không được để trống.';
+    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)) return 'Email không hợp lệ.';
+    return '';
+  };
+
+  const validatePassword = (password) => {
+    if (!password) return 'Mật khẩu không được để trống.';
+    if (password.length < 6) return 'Mật khẩu phải có ít nhất 6 ký tự.';
+    return '';
+  };
+
+  const validateConfirmPassword = (confirmPassword, password) => {
+    if (!confirmPassword) return 'Xác nhận mật khẩu không được để trống.';
+    if (confirmPassword !== password) return 'Mật khẩu xác nhận không khớp.';
+    return '';
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,16 +63,34 @@ const Register = () => {
       ...prev,
       [name]: value,
     }));
+
+    // Clear specific errors when user types
+    if (name === 'name') setNameError('');
+    if (name === 'email') setEmailError('');
+    if (name === 'password') setPasswordError('');
+    if (name === 'confirmPassword') setConfirmPasswordError('');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
-    if (formData.password !== formData.confirmPassword) {
-      setError('Mật khẩu xác nhận không khớp.');
-      return;
+
+    const nameValidationMsg = validateName(formData.name);
+    const emailValidationMsg = validateEmail(formData.email);
+    const passwordValidationMsg = validatePassword(formData.password);
+    const confirmPasswordValidationMsg = validateConfirmPassword(formData.confirmPassword, formData.password);
+
+    setNameError(nameValidationMsg);
+    setEmailError(emailValidationMsg);
+    setPasswordError(passwordValidationMsg);
+    setConfirmPasswordError(confirmPasswordValidationMsg);
+
+    if (nameValidationMsg || emailValidationMsg || passwordValidationMsg || confirmPasswordValidationMsg) {
+      return; // Stop if there are validation errors
     }
+
     // TODO: Implement actual registration logic
+    console.log('Attempting registration with:', formData);
     login({ email: formData.email });
     navigate('/');
   };
@@ -51,7 +103,6 @@ const Register = () => {
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: '100vh',
-        backgroundColor: '#e3f2fd',
         backgroundImage: 'url(/images/auth-background.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -93,6 +144,15 @@ const Register = () => {
               value={formData.name}
               onChange={handleChange}
               variant="outlined"
+              error={!!nameError}
+              helperText={nameError}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PersonIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               margin="normal"
@@ -105,6 +165,15 @@ const Register = () => {
               value={formData.email}
               onChange={handleChange}
               variant="outlined"
+              error={!!emailError}
+              helperText={emailError}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EmailIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               margin="normal"
@@ -118,6 +187,15 @@ const Register = () => {
               value={formData.password}
               onChange={handleChange}
               variant="outlined"
+              error={!!passwordError}
+              helperText={passwordError}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               margin="normal"
@@ -130,6 +208,15 @@ const Register = () => {
               value={formData.confirmPassword}
               onChange={handleChange}
               variant="outlined"
+              error={!!confirmPasswordError}
+              helperText={confirmPasswordError}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
             />
             <Button
               type="submit"

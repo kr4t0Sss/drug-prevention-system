@@ -16,19 +16,24 @@ import {
   IconButton,
   Tooltip,
   Chip,
+  Stack,
 } from '@mui/material';
 import {
   useParams,
   useNavigate
 } from 'react-router-dom';
-import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import SchoolIcon from '@mui/icons-material/School';
-import HomeIcon from '@mui/icons-material/Home';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import DoneAllIcon from '@mui/icons-material/DoneAll';
+import {
+  PlayCircleFilledWhite as PlayCircleFilledWhiteIcon,
+  CheckCircleOutline as CheckCircleOutlineIcon,
+  ChevronLeft as ChevronLeftIcon,
+  ChevronRight as ChevronRightIcon,
+  School as SchoolIcon,
+  Home as HomeIcon,
+  MenuBook as MenuBookIcon,
+  DoneAll as DoneAllIcon,
+  ListAlt as ListAltIcon,
+  CheckCircle as CheckCircleIcon,
+} from '@mui/icons-material';
 
 const mockCourses = [
   {
@@ -235,7 +240,7 @@ const CourseView = () => {
         <Box sx={{ mt: 3, textAlign: 'center' }}>
           <Button
             variant="contained"
-            startIcon={<HomeIcon />}
+            startIcon={<ListAltIcon />}
             onClick={() => navigate('/courses')}
             sx={{
               px: 4,
@@ -261,7 +266,7 @@ const CourseView = () => {
         <Box sx={{ mt: 3, textAlign: 'center' }}>
           <Button
             variant="contained"
-            startIcon={<HomeIcon />}
+            startIcon={<ListAltIcon />}
             onClick={() => navigate('/courses')}
             sx={{
               px: 4,
@@ -294,41 +299,40 @@ const CourseView = () => {
 
       <Grid container spacing={4}>
         {/* Sidebar for modules */}
-        <Grid item xs={12} md={4}>
-          <Paper elevation={6} sx={{ p: 3, borderRadius: 3, position: 'sticky', top: 20, maxHeight: 'calc(100vh - 100px)', overflowY: 'auto', bgcolor: 'background.paper' }}>
-            <Typography variant="h5" gutterBottom fontWeight={700} color="primary.dark" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
-              <MenuBookIcon color="primary" /> Nội dung khóa học
-            </Typography>
-            <List>
+        <Grid item xs={12} md={3}>
+          <Paper elevation={3} sx={{ p: 2, borderRadius: 2, height: '100%', bgcolor: 'background.paper' }}>
+            <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
+              <MenuBookIcon color="primary" />
+              <Typography variant="h6" fontWeight={600}>Nội dung khóa học</Typography>
+            </Stack>
+            <Divider sx={{ mb: 2 }} />
+            <List component="nav">
               {course.modules.map((moduleItem) => (
                 <ListItem
                   key={moduleItem.id}
                   button
-                  onClick={() => setCurrentModuleId(moduleItem.id)}
                   selected={currentModuleId === moduleItem.id}
+                  onClick={() => setCurrentModuleId(moduleItem.id)}
                   sx={{
-                    borderRadius: 2,
+                    borderRadius: 1,
                     mb: 1,
-                    py: 1.5,
-                    px: 2,
-                    transition: 'all 0.3s ease',
-                    bgcolor: currentModuleId === moduleItem.id ? '#e3f2fd' : 'transparent',
+                    bgcolor: moduleItem.completed ? '#e8f5e9' : 'inherit',
                     '&:hover': {
-                      bgcolor: currentModuleId === moduleItem.id ? '#bbdefb' : '#f0f0f0',
-                      transform: 'translateY(-2px)',
+                      bgcolor: moduleItem.completed ? '#dcedc8' : '#f0f0f0',
                     },
+                    opacity: moduleItem.completed ? 0.7 : 1,
                   }}
                 >
-                  <ListItemIcon sx={{ minWidth: '40px' }}>
+                  <ListItemIcon sx={{ minWidth: 35 }}>
                     {moduleItem.completed ? (
                       <CheckCircleOutlineIcon color="success" />
                     ) : (
-                      <PlayCircleFilledWhiteIcon color="primary" />
+                      <PlayCircleFilledWhiteIcon color="action" />
                     )}
                   </ListItemIcon>
                   <ListItemText
                     primary={
-                      <Typography variant="body1" fontWeight={currentModuleId === moduleItem.id ? 700 : 500} color="text.primary">
+                      <Typography variant="body2" fontWeight={500} sx={{ color: moduleItem.completed ? 'success.dark' : 'text.primary' }}>
                         {moduleItem.title}
                       </Typography>
                     }
@@ -336,86 +340,69 @@ const CourseView = () => {
                 </ListItem>
               ))}
             </List>
-            {!course.modules.some(m => !m.completed) && (
-              <Box sx={{ mt: 3, textAlign: 'center' }}>
-                <Chip label="Tất cả module đã hoàn thành!" color="success" icon={<DoneAllIcon />} sx={{ fontSize: '0.9rem', p: '5px 10px' }} />
-              </Box>
-            )}
           </Paper>
         </Grid>
 
         {/* Main content area */}
-        <Grid item xs={12} md={8}>
-          <Paper elevation={6} sx={{ p: { xs: 3, md: 5 }, borderRadius: 3, minHeight: '500px', bgcolor: 'background.paper' }}>
+        <Grid item xs={12} md={9}>
+          <Paper elevation={3} sx={{ p: { xs: 3, md: 4 }, borderRadius: 2, minHeight: '60vh', bgcolor: 'background.paper' }}>
             {currentModule ? (
               <>
-                <Typography variant="h4" component="h2" gutterBottom fontWeight={700} color="primary.dark" sx={{ mb: 3 }}>
+                <Typography variant="h4" gutterBottom fontWeight={700} color="primary.dark" sx={{ mb: 3 }}>
                   {currentModule.title}
                 </Typography>
                 <Divider sx={{ mb: 3 }} />
-                <Box sx={{ lineHeight: 1.8, fontSize: '1.1rem' }}>
+                <Box sx={{ lineHeight: 1.8 }}>
                   {currentModule.content}
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 5, flexWrap: 'wrap', gap: 2 }}>
+                <Stack direction="row" justifyContent="space-between" sx={{ mt: 4, pt: 2, borderTop: '1px solid #eee' }}>
                   <Button
-                    variant="contained"
+                    variant="outlined"
+                    startIcon={<ChevronLeftIcon />}
                     onClick={handlePreviousModule}
                     disabled={isFirstModule}
-                    startIcon={<ChevronLeftIcon />}
-                    sx={{
-                      px: 3,
-                      py: 1,
-                      fontSize: '1rem',
-                      backgroundColor: '#bdbdbd',
-                      '&:hover': {
-                        backgroundColor: '#9e9e9e',
-                      },
-                    }}
+                    sx={{ px: 3, py: 1.2 }}
                   >
-                    Module trước
+                    Bài học trước
                   </Button>
+                  {!currentModule.completed && (
+                    <Button
+                      variant="contained"
+                      startIcon={<CheckCircleIcon />}
+                      onClick={handleMarkAsComplete}
+                      sx={{
+                        backgroundColor: '#4caf50',
+                        '&:hover': {
+                          backgroundColor: '#388e3c',
+                        },
+                        px: 3,
+                        py: 1.2,
+                      }}
+                    >
+                      Đánh dấu đã hoàn thành
+                    </Button>
+                  )}
                   <Button
                     variant="contained"
-                    onClick={handleMarkAsComplete}
-                    disabled={currentModule.completed}
-                    startIcon={<CheckCircleOutlineIcon />}
-                    sx={{
-                      px: 3,
-                      py: 1,
-                      fontSize: '1rem',
-                      backgroundColor: '#4caf50',
-                      '&:hover': {
-                        backgroundColor: '#388e3c',
-                      },
-                    }}
-                  >
-                    {currentModule.completed ? 'Đã hoàn thành' : 'Hoàn thành module'}
-                  </Button>
-                  <Button
-                    variant="contained"
+                    endIcon={<ChevronRightIcon />}
                     onClick={handleNextModule}
                     disabled={isLastModule}
-                    endIcon={<ChevronRightIcon />}
                     sx={{
-                      px: 3,
-                      py: 1,
-                      fontSize: '1rem',
                       backgroundColor: '#2196f3',
                       '&:hover': {
                         backgroundColor: '#1976d2',
                       },
+                      px: 3,
+                      py: 1.2,
                     }}
                   >
-                    Module tiếp theo
+                    Bài học tiếp theo
                   </Button>
-                </Box>
+                </Stack>
               </>
             ) : (
               <Box sx={{ textAlign: 'center', py: 5 }}>
-                <Typography variant="h5" color="text.secondary" gutterBottom>
-                  Vui lòng chọn một module để bắt đầu học.
-                </Typography>
-                <img src="/images/courses/course_view_placeholder.png" alt="Chọn module" style={{ maxWidth: '400px', height: 'auto', mt: 3 }} />
+                <Typography variant="h5" color="text.secondary">Vui lòng chọn một module để bắt đầu.</Typography>
               </Box>
             )}
           </Paper>

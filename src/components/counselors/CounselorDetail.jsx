@@ -13,6 +13,7 @@ import {
   Rating,
   CircularProgress,
   Alert,
+  Divider,
 } from '@mui/material';
 import {
   Psychology as PsychologyIcon,
@@ -23,6 +24,8 @@ import {
   Email as EmailIcon,
   Person as PersonIcon,
   ChevronLeft as ChevronLeftIcon,
+  CalendarMonth as CalendarMonthIcon,
+  EventAvailable as EventAvailableIcon,
 } from '@mui/icons-material';
 
 const mockCounselors = [
@@ -202,90 +205,88 @@ const CounselorDetail = () => {
               </Typography>
             </Stack>
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
-              <WorkIcon color="action" />
-              <Typography variant="body1" color="text.secondary">
+              <WorkIcon color="action" sx={{ fontSize: 18 }} />
+              <Typography variant="body2" color="text.secondary">
                 Kinh nghiệm: <Typography component="span" fontWeight="bold">{counselor.experience} năm</Typography>
               </Typography>
             </Stack>
-            <Box sx={{ width: '100%', mt: 2 }}>
-              <Button
-                variant="contained"
-                startIcon={<CalendarTodayIcon />}
-                fullWidth
-                sx={{
-                  mb: 1.5,
-                  py: 1.5,
-                  fontSize: '1.1rem',
-                  bgcolor: '#4caf50',
-                  '&:hover': {
-                    bgcolor: '#388e3c',
-                  },
-                }}
-                onClick={() => navigate('/counseling/schedule', { state: { selectedCounselorId: counselor.id } })}
-              >
-                Đặt lịch hẹn ngay
-              </Button>
-              <Button
-                variant="outlined"
-                startIcon={<EmailIcon />}
-                fullWidth
-                sx={{
-                  mb: 1.5,
-                  py: 1.5,
-                  fontSize: '1.1rem',
-                  borderColor: '#2196f3',
-                  color: '#2196f3',
-                  '&:hover': {
-                    bgcolor: '#e3f2fd',
-                    borderColor: '#1976d2',
-                  },
-                }}
-                onClick={() => window.location.href = `mailto:${counselor.contact.email}`}
-              >
-                Gửi Email
-              </Button>
-              <Button
-                variant="outlined"
-                startIcon={<CallIcon />}
-                fullWidth
-                sx={{
-                  py: 1.5,
-                  fontSize: '1.1rem',
-                  borderColor: '#ff9800',
-                  color: '#ff9800',
-                  '&:hover': {
-                    bgcolor: '#fff3e0',
-                    borderColor: '#fb8c00',
-                  },
-                }}
-                onClick={() => window.location.href = `tel:${counselor.contact.phone}`}
-              >
-                Gọi điện
-              </Button>
+            <Box sx={{ mt: 2, textAlign: 'left', width: '100%' }}>
+              <Typography variant="subtitle1" fontWeight={600} gutterBottom>Liên hệ:</Typography>
+              <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
+                <CallIcon color="action" fontSize="small" />
+                <Typography variant="body2" color="text.secondary">{counselor.contact.phone}</Typography>
+              </Stack>
+              <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
+                <EmailIcon color="action" fontSize="small" />
+                <Typography variant="body2" color="text.secondary">{counselor.contact.email}</Typography>
+              </Stack>
             </Box>
+            <Button
+              variant="contained"
+              startIcon={<EventAvailableIcon />}
+              onClick={() => navigate(`/counseling/schedule/${counselor.id}`)}
+              sx={{
+                mt: 3,
+                backgroundColor: '#4caf50',
+                '&:hover': {
+                  backgroundColor: '#388e3c',
+                },
+                px: 4,
+                py: 1.2,
+                fontSize: '1rem',
+              }}
+            >
+              Đặt lịch tư vấn
+            </Button>
           </Grid>
 
           <Grid item xs={12} md={8}>
-            <Typography variant="h5" component="h3" gutterBottom fontWeight={700} color="primary.dark" mb={3}>
-              Giới thiệu về tôi
+            <Typography variant="h5" gutterBottom fontWeight={600}>
+              Thông tin tiểu sử
             </Typography>
-            <Typography variant="body1" color="text.primary" sx={{ lineHeight: 1.8, fontSize: '1.1rem', mb: 3 }}>
+            <Typography variant="body1" paragraph color="text.primary" sx={{ mb: 3, lineHeight: 1.8 }}>
               {counselor.bio}
             </Typography>
 
-            {/* Phần này có thể hiển thị các bài viết, chuyên đề của tư vấn viên */}
-            <Box sx={{ mt: 5, p: 3, bgcolor: '#f5f5f5', borderRadius: 2 }}>
-              <Typography variant="h6" component="h4" gutterBottom fontWeight={600} color="text.primary" mb={2}>
-                Lĩnh vực chuyên môn
-              </Typography>
-              <Stack direction="row" flexWrap="wrap" spacing={1}>
-                <Chip label="Trị liệu nhận thức hành vi" variant="outlined" color="secondary" />
-                <Chip label="Liệu pháp động lực" variant="outlined" color="secondary" />
-                <Chip label="Trị liệu gia đình" variant="outlined" color="secondary" />
-                <Chip label="Hỗ trợ cai nghiện" variant="outlined" color="secondary" />
-                <Chip label="Rối loạn lo âu và trầm cảm" variant="outlined" color="secondary" />
+            <Divider sx={{ my: 4 }} />
+
+            <Typography variant="h5" gutterBottom fontWeight={600} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <CalendarMonthIcon /> Lịch hẹn khả dụng
+            </Typography>
+            {counselor.availableSlots.length > 0 ? (
+              <Stack spacing={1} sx={{ mt: 2 }}>
+                {counselor.availableSlots.map((slot, index) => (
+                  <Chip
+                    key={index}
+                    label={`${slot.time} - ${slot.date}`}
+                    color="info"
+                    variant="outlined"
+                    sx={{ fontSize: '0.9rem', fontWeight: 'bold', py: '5px' }}
+                  />
+                ))}
               </Stack>
-            </Box>
+            ) : (
+              <Alert severity="info" sx={{ mt: 2 }}>
+                Hiện tại không có lịch hẹn khả dụng. Vui lòng liên hệ trực tiếp hoặc kiểm tra lại sau.
+              </Alert>
+            )}
+            <Button
+              variant="contained"
+              startIcon={<EventAvailableIcon />}
+              onClick={() => navigate(`/counseling/schedule/${counselor.id}`)}
+              sx={{
+                mt: 3,
+                backgroundColor: '#2196f3',
+                '&:hover': {
+                  backgroundColor: '#1976d2',
+                },
+                px: 4,
+                py: 1.2,
+                fontSize: '1rem',
+              }}
+            >
+              Đặt lịch tư vấn
+            </Button>
           </Grid>
         </Grid>
       </Paper>

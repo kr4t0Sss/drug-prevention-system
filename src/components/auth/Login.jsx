@@ -9,12 +9,18 @@ import {
   Container,
   Divider,
   Alert,
+  InputAdornment,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../../config/firebase';
 import GoogleIcon from '@mui/icons-material/Google';
+import {
+  LockOpen as LockOpenIcon,
+  Email as EmailIcon,
+  Lock as LockIcon,
+} from '@mui/icons-material';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,6 +30,20 @@ const Login = () => {
     password: '',
   });
   const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState(''); // State for email validation error
+  const [passwordError, setPasswordError] = useState(''); // State for password validation error
+
+  const validateEmail = (email) => {
+    if (!email) return 'Email không được để trống.';
+    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)) return 'Email không hợp lệ.';
+    return '';
+  };
+
+  const validatePassword = (password) => {
+    if (!password) return 'Mật khẩu không được để trống.';
+    if (password.length < 6) return 'Mật khẩu phải có ít nhất 6 ký tự.';
+    return '';
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,13 +51,30 @@ const Login = () => {
       ...prev,
       [name]: value,
     }));
+
+    // Clear specific errors when user types
+    if (name === 'email') setEmailError('');
+    if (name === 'password') setPasswordError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    const emailValidationMsg = validateEmail(formData.email);
+    const passwordValidationMsg = validatePassword(formData.password);
+
+    setEmailError(emailValidationMsg);
+    setPasswordError(passwordValidationMsg);
+
+    if (emailValidationMsg || passwordValidationMsg) {
+      return; // Stop if there are validation errors
+    }
+
     try {
       // This is a placeholder for actual login logic
+      // In a real application, you would use firebase.auth().signInWithEmailAndPassword(formData.email, formData.password)
+      console.log('Attempting login with:', formData.email, formData.password);
       login({ email: formData.email });
       navigate('/');
     } catch (err) {
@@ -65,7 +102,6 @@ const Login = () => {
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: '100vh',
-        backgroundColor: '#e3f2fd', // Light blue background
         backgroundImage: 'url(/images/auth-background.jpg)', // Placeholder for a background image
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -107,6 +143,15 @@ const Login = () => {
               value={formData.email}
               onChange={handleChange}
               variant="outlined"
+              error={!!emailError} // Apply error state
+              helperText={emailError} // Display error message
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EmailIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               margin="normal"
@@ -120,6 +165,15 @@ const Login = () => {
               value={formData.password}
               onChange={handleChange}
               variant="outlined"
+              error={!!passwordError} // Apply error state
+              helperText={passwordError} // Display error message
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
             />
             <Button
               type="submit"

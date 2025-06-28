@@ -11,6 +11,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import ScienceIcon from '@mui/icons-material/Science'; // Example icon for ASSIST
 import ChildFriendlyIcon from '@mui/icons-material/ChildFriendly'; // Example icon for CRAFFT
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd'; // Main icon for assessment list
 
 const assessments = [
   {
@@ -31,6 +32,7 @@ const AssessmentList = () => {
   return (
     <Container maxWidth="md" sx={{ py: 6 }}>
       <Box sx={{ textAlign: 'center', mb: 6 }}>
+        <AssignmentIndIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
         <Typography variant="h3" component="h1" gutterBottom fontWeight={700} color="primary.dark">
           Đánh giá nguy cơ
         </Typography>

@@ -27,6 +27,7 @@ import {
   BarChart as BarChartIcon,
   PlayCircleFilled as PlayCircleFilledIcon,
   CheckCircleOutline as CheckCircleOutlineIcon,
+  MenuBook as MenuBookIcon,
 } from '@mui/icons-material';
 
 const mockCourses = [
@@ -133,7 +134,7 @@ const CourseDetail = () => {
         </Typography>
       </Box>
 
-      <Paper elevation={6} sx={{ p: { xs: 3, md: 5 }, borderRadius: 3, bgcolor: 'background.paper' }}>
+      <Paper elevation={6} sx={{ p: { xs: 3, md: 5 }, borderRadius: 3, bgcolor: 'background.paper', overflow: 'hidden' }}>
         <Grid container spacing={4}>
           <Grid item xs={12} md={5}>
             <Box
@@ -142,8 +143,9 @@ const CourseDetail = () => {
               alt={course.title}
               sx={{
                 width: '100%',
-                height: 'auto',
-                borderRadius: 2,
+                height: 300,
+                borderRadius: 3,
+                objectFit: 'cover',
                 boxShadow: 3,
               }}
             />
@@ -182,8 +184,8 @@ const CourseDetail = () => {
 
           <Grid item xs={12}>
             <Divider sx={{ my: 4 }} />
-            <Typography variant="h5" gutterBottom fontWeight={600}>
-              Nội dung khóa học
+            <Typography variant="h5" gutterBottom fontWeight={600} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <MenuBookIcon /> Nội dung khóa học
             </Typography>
             <List>
               {course.modules.map((moduleItem) => (
@@ -203,6 +205,9 @@ const CourseDetail = () => {
                       },
                     }}
                   >
+                    <ListItemIcon sx={{ minWidth: 35 }}>
+                      {moduleItem.completed ? <CheckCircleOutlineIcon color="success" /> : <PlayCircleFilledIcon color="action" />}
+                    </ListItemIcon>
                     <ListItemText
                       primary={
                         <Typography variant="body1" fontWeight={500} color={moduleItem.completed ? 'success.dark' : 'text.primary'}>

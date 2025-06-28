@@ -321,7 +321,7 @@ const ProgramDetail = () => {
                     '&:hover': {
                       bgcolor: '#1976d2',
                     },
-                    fontWeight: 'bold
+                    fontWeight: 'bold',
                     px: 4,
                     py: 1.2,
                   }}

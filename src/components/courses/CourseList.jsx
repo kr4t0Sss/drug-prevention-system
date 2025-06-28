@@ -107,7 +107,7 @@ const CourseList = () => {
       <Stack
         direction={{ xs: 'column', md: 'row' }}
         spacing={2}
-        sx={{ mb: 6, p: 3, bgcolor: '#e3f2fd', borderRadius: 2, alignItems: 'center', justifyContent: 'center' }}
+        sx={{ mb: 6, p: 3, borderRadius: 2, alignItems: 'center', justifyContent: 'center' }}
       >
         <FormControl sx={{ minWidth: 200 }} variant="outlined">
           <InputLabel>Đối tượng học</InputLabel>
@@ -165,6 +165,7 @@ const CourseList = () => {
                   '&:hover': { boxShadow: 6, transform: 'translateY(-5px)' },
                   transition: 'all 0.3s ease-in-out',
                   borderRadius: 2,
+                  overflow: 'hidden',
                 }}
               >
                 <CardMedia
@@ -172,7 +173,12 @@ const CourseList = () => {
                   height="200"
                   image={course.image}
                   alt={course.title}
-                  sx={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
+                  sx={{
+                    width: '100%',
+                    objectFit: 'cover',
+                    borderTopLeftRadius: 2,
+                    borderTopRightRadius: 2,
+                  }}
                 />
                 <CardContent sx={{ flexGrow: 1, p: 3 }}>
                   <Stack direction="row" spacing={1} sx={{ mb: 1.5 }}>

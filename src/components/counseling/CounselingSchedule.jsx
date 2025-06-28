@@ -19,13 +19,31 @@ import {
   Divider,
   Container,
   Stack,
+  InputAdornment,
 } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import { useCounseling } from '../../contexts/CounselingContext';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable'; // Icon for scheduling
-import { Check, Schedule, Person, AssignmentTurnedIn } from '@mui/icons-material';
+import {
+  EventAvailable as EventAvailableIcon,
+  Check,
+  Schedule,
+  Person,
+  AssignmentTurnedIn,
+  ArrowBackIosNew as ArrowBackIosNewIcon,
+  ArrowForwardIos as ArrowForwardIosIcon,
+  CheckCircleOutline as CheckCircleOutlineIcon,
+  Email as EmailIcon,
+  Phone as PhoneIcon,
+  Subject as SubjectIcon,
+  CalendarMonth as CalendarMonthIcon,
+  AccessTime as AccessTimeIcon,
+  MeetingRoom as MeetingRoomIcon,
+  Videocam as VideocamIcon,
+  AddCircleOutline as AddCircleOutlineIcon,
+  Home as HomeIcon,
+} from '@mui/icons-material';
 
 const counselors = {
   '1': {
@@ -191,13 +209,13 @@ const CounselingSchedule = () => {
                 value={selectedDate}
                 onChange={handleDateChange}
                 disablePast
-                slotProps={{ textField: { fullWidth: true, variant: "outlined" } }}
+                slotProps={{ textField: { fullWidth: true, variant: "outlined", InputProps: { startAdornment: (<InputAdornment position="start"><CalendarMonthIcon color="action" /></InputAdornment>) } } }}
               />
               <TimePicker
                 label="Chọn giờ"
                 value={selectedTime}
                 onChange={handleTimeChange}
-                slotProps={{ textField: { fullWidth: true, variant: "outlined" } }}
+                slotProps={{ textField: { fullWidth: true, variant: "outlined", InputProps: { startAdornment: (<InputAdornment position="start"><AccessTimeIcon color="action" /></InputAdornment>) } } }}
               />
             </Box>
           </LocalizationProvider>
@@ -214,6 +232,13 @@ const CounselingSchedule = () => {
               onChange={handleInputChange}
               fullWidth
               variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Person color="action" />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               required
@@ -224,6 +249,13 @@ const CounselingSchedule = () => {
               onChange={handleInputChange}
               fullWidth
               variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EmailIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               required
@@ -233,6 +265,13 @@ const CounselingSchedule = () => {
               onChange={handleInputChange}
               fullWidth
               variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PhoneIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               label="Mối quan tâm hoặc câu hỏi"
@@ -243,37 +282,68 @@ const CounselingSchedule = () => {
               rows={4}
               fullWidth
               variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SubjectIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
             />
           </Box>
         );
 
       case 3:
         return (
-          <Box sx={{ mt: 3 }}>
-            <Alert severity="success" sx={{ mb: 3, fontSize: '1.1rem', fontWeight: 'bold' }}>
-              Phiên tư vấn của bạn đã được đặt lịch thành công!
-            </Alert>
-            <Paper sx={{ p: 3, borderRadius: 2, bgcolor: '#e8f5e9' }}>
-              <Typography variant="h6" gutterBottom fontWeight={600}>
-                Chi tiết phiên tư vấn
-              </Typography>
-              <Divider sx={{ my: 2 }} />
-              <Stack spacing={1.5}>
-                <Typography variant="body1"><strong>Tư vấn viên:</strong> {counselor.name}</Typography>
-                <Typography variant="body1"><strong>Loại phiên:</strong> {sessionType === 'video' ? 'Phiên video trực tuyến' : 'Phiên trực tiếp tại văn phòng'}</Typography>
-                <Typography variant="body1"><strong>Ngày:</strong> {selectedDate ? selectedDate.format('DD/MM/YYYY') : 'N/A'}</Typography>
-                <Typography variant="body1"><strong>Thời gian:</strong> {selectedTime ? selectedTime.format('HH:mm') : 'N/A'}</Typography>
-                <Typography variant="body1"><strong>Tên của bạn:</strong> {formData.name}</Typography>
-                <Typography variant="body1"><strong>Email:</strong> {formData.email}</Typography>
-                <Typography variant="body1"><strong>Số điện thoại:</strong> {formData.phone}</Typography>
-                <Typography variant="body1"><strong>Mối quan tâm:</strong> {formData.concerns || 'Không có'}</Typography>
+          <Box sx={{ mt: 3, textAlign: 'left' }}>
+            <Typography variant="h6" gutterBottom fontWeight={600}>
+              Xác nhận thông tin đặt lịch
+            </Typography>
+            <Divider sx={{ my: 2 }} />
+            <Stack spacing={1.5}>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Person fontSize="small" color="primary" />
+                <Typography variant="body1">Tư vấn viên: <Box component="span" fontWeight="bold">{counselor.name}</Box></Typography>
               </Stack>
-            </Paper>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                {sessionType === 'video' ? <VideocamIcon fontSize="small" color="primary" /> : <MeetingRoomIcon fontSize="small" color="primary" />}
+                <Typography variant="body1">Loại phiên: <Box component="span" fontWeight="bold">{sessionType === 'video' ? 'Trực tuyến' : 'Trực tiếp'}</Box></Typography>
+              </Stack>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <CalendarMonthIcon fontSize="small" color="primary" />
+                <Typography variant="body1">Ngày: <Box component="span" fontWeight="bold">{selectedDate ? selectedDate.format('DD/MM/YYYY') : 'Chưa chọn'}</Box></Typography>
+              </Stack>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <AccessTimeIcon fontSize="small" color="primary" />
+                <Typography variant="body1">Giờ: <Box component="span" fontWeight="bold">{selectedTime ? selectedTime.format('HH:mm') : 'Chưa chọn'}</Box></Typography>
+              </Stack>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Person fontSize="small" color="primary" />
+                <Typography variant="body1">Họ và tên: <Box component="span" fontWeight="bold">{formData.name}</Box></Typography>
+              </Stack>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <EmailIcon fontSize="small" color="primary" />
+                <Typography variant="body1">Email: <Box component="span" fontWeight="bold">{formData.email}</Box></Typography>
+              </Stack>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <PhoneIcon fontSize="small" color="primary" />
+                <Typography variant="body1">Số điện thoại: <Box component="span" fontWeight="bold">{formData.phone}</Box></Typography>
+              </Stack>
+              {formData.concerns && (
+                <Stack direction="row" alignItems="flex-start" spacing={1}>
+                  <SubjectIcon fontSize="small" color="primary" sx={{ mt: 0.5 }} />
+                  <Typography variant="body1">Mối quan tâm: <Box component="span" fontWeight="bold">{formData.concerns}</Box></Typography>
+                </Stack>
+              )}
+            </Stack>
+            <Alert severity="info" sx={{ mt: 4, textAlign: 'center' }}>
+              Vui lòng kiểm tra lại thông tin trước khi xác nhận. Chúng tôi sẽ gửi email xác nhận cho bạn.
+            </Alert>
           </Box>
         );
 
       default:
-        return null;
+        return <Typography>Bước không hợp lệ</Typography>;
     }
   };
 
@@ -284,8 +354,8 @@ const CounselingSchedule = () => {
         <Typography variant="h3" component="h1" gutterBottom fontWeight={700} color="primary.dark">
           Đặt lịch tư vấn
         </Typography>
-        <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto', mb: 3 }}>
-          Điền vào biểu mẫu dưới đây để đặt lịch tư vấn với chuyên gia của chúng tôi.
+        <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto' }}>
+          Hoàn thành các bước dưới đây để đặt lịch hẹn tư vấn với chuyên gia của chúng tôi.
         </Typography>
       </Box>
 
@@ -296,48 +366,37 @@ const CounselingSchedule = () => {
           <Typography variant="body1" color="text.secondary">{counselor.title}</Typography>
         </Box>
 
-        <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
-          {steps.map((step, index) => (
+        <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 5 }}>
+          {steps.map((step) => (
             <Step key={step.label}>
-              <StepLabel StepIconComponent={() => step.icon}>{step.label}</StepLabel>
+              <StepLabel icon={step.icon}>{step.label}</StepLabel>
             </Step>
           ))}
         </Stepper>
 
-        {renderStepContent()}
-
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 6 }}>
-          <Button
-            disabled={activeStep === 0}
-            onClick={handleBack}
-            variant="outlined"
-            size="large"
-            sx={{ px: 3, py: 1.2, borderColor: '#9e9e9e', color: '#616161', '&:hover': { borderColor: '#424242', color: '#424242' } }}
-          >
-            Quay lại
-          </Button>
-          {activeStep === steps.length - 1 ? (
+        <Box>
+          {renderStepContent()}
+          <Stack direction="row" justifyContent="space-between" sx={{ mt: 4 }}>
             <Button
-              onClick={() => navigate('/')}
-              variant="contained"
-              size="large"
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              variant="outlined"
+              startIcon={<ArrowBackIosNewIcon />}
               sx={{
-                backgroundColor: '#4caf50',
-                '&:hover': {
-                  backgroundColor: '#388e3c',
-                },
-                px: 4,
+                px: 3,
                 py: 1.2,
+                borderColor: '#9e9e9e',
+                color: '#616161',
+                '&:hover': { borderColor: '#424242', color: '#424242' },
               }}
             >
-              Hoàn tất & Quay về trang chủ
+              {activeStep === 0 ? 'Hủy' : 'Quay lại'}
             </Button>
-          ) : (
             <Button
               variant="contained"
-              onClick={isStepComplete() ? handleNext : () => alert('Vui lòng điền đầy đủ thông tin để tiếp tục!')}
-              disabled={!isStepComplete() && activeStep !== steps.length - 1} // Disable if not complete and not on last step
-              size="large"
+              onClick={activeStep === steps.length - 1 ? handleSubmit : handleNext}
+              disabled={!isStepComplete()}
+              endIcon={activeStep === steps.length - 1 ? <CheckCircleOutlineIcon /> : <ArrowForwardIosIcon />}
               sx={{
                 backgroundColor: '#2196f3',
                 '&:hover': {
@@ -347,10 +406,44 @@ const CounselingSchedule = () => {
                 py: 1.2,
               }}
             >
-              {activeStep === steps.length - 2 ? 'Xác nhận & Đặt lịch' : 'Tiếp theo'}
+              {activeStep === steps.length - 1 ? 'Xác nhận và đặt lịch' : 'Tiếp theo'}
             </Button>
-          )}
+          </Stack>
         </Box>
+
+        {activeStep === steps.length && (
+          <Box sx={{ mt: 5, textAlign: 'center' }}>
+            <Typography variant="h5" gutterBottom>
+              Lịch hẹn của bạn đã được đặt thành công!
+            </Typography>
+            <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+              Cảm ơn bạn đã tin tưởng dịch vụ của chúng tôi. Chúng tôi sẽ liên hệ với bạn sớm nhất để xác nhận chi tiết.
+            </Typography>
+            <Stack direction="row" justifyContent="center" spacing={2} sx={{ mt: 3 }}>
+              <Button
+                variant="contained"
+                onClick={handleReset}
+                startIcon={<AddCircleOutlineIcon />}
+                sx={{
+                  backgroundColor: '#4caf50',
+                  '&:hover': {
+                    backgroundColor: '#388e3c',
+                  },
+                }}
+              >
+                Đặt lịch hẹn khác
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => navigate('/')}
+                startIcon={<HomeIcon />}
+                sx={{ borderColor: '#2196f3', color: '#2196f3', '&:hover': { backgroundColor: 'rgba(33, 150, 243, 0.04)' } }}
+              >
+                Quay về trang chủ
+              </Button>
+            </Stack>
+          </Box>
+        )}
       </Paper>
     </Container>
   );

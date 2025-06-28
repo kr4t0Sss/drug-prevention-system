@@ -13,7 +13,17 @@ import {
   Container,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import ScienceIcon from '@mui/icons-material/Science'; // Icon for ASSIST Assessment
+import {
+  Science as ScienceIcon, // Icon for ASSIST Assessment
+  ArrowBackIosNew as ArrowBackIosNewIcon, // Icon for previous button
+  ArrowForwardIos as ArrowForwardIosIcon, // Icon for next button
+  CheckCircleOutline as CheckCircleOutlineIcon, // Icon for submit button
+  AssignmentTurnedIn as AssignmentTurnedInIcon, // Icon for results title
+  Score as ScoreIcon, // Icon for total score
+  Info as InfoIcon, // Icon for risk level
+  Replay as ReplayIcon, // Icon for reset button
+  QuestionAnswer as QuestionAnswerIcon, // Icon for counseling link
+} from '@mui/icons-material';
 
 const questions = [
   {
@@ -155,6 +165,7 @@ const AssistAssessment = () => {
                 onClick={handlePrevious}
                 disabled={currentQuestionIndex === 0}
                 size="large"
+                startIcon={<ArrowBackIosNewIcon />}
                 sx={{ px: 3, py: 1.2, borderColor: '#9e9e9e', color: '#616161', '&:hover': { borderColor: '#424242', color: '#424242' } }}
               >
                 Câu trước
@@ -165,6 +176,7 @@ const AssistAssessment = () => {
                   onClick={handleSubmit}
                   disabled={!answers[currentQuestion.id]}
                   size="large"
+                  endIcon={<CheckCircleOutlineIcon />}
                   sx={{
                     backgroundColor: '#2196f3',
                     '&:hover': {
@@ -182,6 +194,7 @@ const AssistAssessment = () => {
                   onClick={handleNext}
                   disabled={!answers[currentQuestion.id]}
                   size="large"
+                  endIcon={<ArrowForwardIosIcon />}
                   sx={{
                     backgroundColor: '#2196f3',
                     '&:hover': {
@@ -198,8 +211,8 @@ const AssistAssessment = () => {
           </>
         ) : (
           <Box textAlign="center">
-            <Typography variant="h4" gutterBottom fontWeight={700} color="primary.dark">
-              Kết quả đánh giá của bạn
+            <Typography variant="h4" gutterBottom fontWeight={700} color="primary.dark" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+              <AssignmentTurnedInIcon fontSize="large" /> Kết quả đánh giá của bạn
             </Typography>
             <Alert
               severity={getRiskLevel(calculateScore()).color}
@@ -212,21 +225,23 @@ const AssistAssessment = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                gap: 1,
               }}
             >
               {getRiskLevel(calculateScore()).message}
             </Alert>
-            <Typography variant="h5" paragraph sx={{ fontWeight: 'bold', color: 'text.primary' }}>
-              Tổng điểm: <Box component="span" sx={{ color: '#4caf50' }}>{calculateScore()}</Box>
+            <Typography variant="h5" paragraph sx={{ fontWeight: 'bold', color: 'text.primary', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+              <ScoreIcon /> Tổng điểm: <Box component="span" sx={{ color: '#4caf50' }}>{calculateScore()}</Box>
             </Typography>
-            <Typography variant="h5" paragraph sx={{ fontWeight: 'bold', color: 'text.primary' }}>
-              Mức độ nguy cơ: <Box component="span" sx={{ color: getRiskLevel(calculateScore()).color === 'success' ? '#4caf50' : getRiskLevel(calculateScore()).color === 'warning' ? '#ff9800' : '#f44336' }}>{getRiskLevel(calculateScore()).level}</Box>
+            <Typography variant="h5" paragraph sx={{ fontWeight: 'bold', color: 'text.primary', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+              <InfoIcon /> Mức độ nguy cơ: <Box component="span" sx={{ color: getRiskLevel(calculateScore()).color === 'success' ? '#4caf50' : getRiskLevel(calculateScore()).color === 'warning' ? '#ff9800' : '#f44336' }}>{getRiskLevel(calculateScore()).level}</Box>
             </Typography>
             <Stack direction="row" justifyContent="center" spacing={2} sx={{ mt: 4 }}>
               <Button
                 variant="contained"
                 onClick={handleReset}
                 size="large"
+                startIcon={<ReplayIcon />}
                 sx={{
                   backgroundColor: '#2196f3',
                   '&:hover': {
@@ -240,6 +255,7 @@ const AssistAssessment = () => {
                 variant="outlined"
                 onClick={() => navigate('/counseling')}
                 size="large"
+                startIcon={<QuestionAnswerIcon />}
                 sx={{ borderColor: '#2196f3', color: '#2196f3', '&:hover': { backgroundColor: 'rgba(33, 150, 243, 0.04)' } }}
               >
                 Tìm hiểu thêm về tư vấn

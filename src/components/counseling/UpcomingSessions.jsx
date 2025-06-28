@@ -13,10 +13,17 @@ import {
 import {
   useNavigate
 } from 'react-router-dom';
-import EventIcon from '@mui/icons-material/Event';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import ClassIcon from '@mui/icons-material/Class'; // Example icon for session type
+import {
+  Event as EventIcon,
+  AccessTime as AccessTimeIcon,
+  PersonOutline as PersonOutlineIcon,
+  Class as ClassIcon, // Example icon for session type
+  Videocam as VideocamIcon, // Icon for online session type
+  MeetingRoom as MeetingRoomIcon, // Icon for in-person session type
+  CalendarMonth as CalendarMonthIcon, // Icon for date
+  ArrowForwardIos as ArrowForwardIosIcon, // Icon for view details button
+  AddCircleOutline as AddCircleOutlineIcon, // Icon for schedule new button
+} from '@mui/icons-material';
 
 const sessions = [
   {
@@ -78,7 +85,7 @@ const UpcomingSessions = () => {
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   boxShadow: 3,
-                  '&:hover': { boxShadow: 6, transform: 'translateY(-5px)' },
+                  '&:hover': { boxShadow: 8, transform: 'translateY(-8px)' },
                   transition: 'all 0.3s ease-in-out',
                 }}
               >
@@ -88,14 +95,15 @@ const UpcomingSessions = () => {
                     color={session.type === 'Trực tuyến' ? 'primary' : 'secondary'}
                     size="small"
                     sx={{ mb: 1.5, fontWeight: 'bold' }}
+                    icon={session.type === 'Trực tuyến' ? <VideocamIcon /> : <MeetingRoomIcon />}
                   />
                   <Typography variant="h6" component="h2" gutterBottom fontWeight={600}>
                     {session.title}
                   </Typography>
                   <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
-                    <AccessTimeIcon fontSize="small" color="action" />
+                    <CalendarMonthIcon fontSize="small" color="action" />
                     <Typography variant="body2" color="text.secondary">
-                      {session.time} ngày {session.date}
+                      Ngày {session.date} lúc {session.time}
                     </Typography>
                   </Stack>
                   <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
@@ -109,12 +117,13 @@ const UpcomingSessions = () => {
                   variant="contained"
                   size="large"
                   onClick={() => navigate(session.path)}
+                  endIcon={<ArrowForwardIosIcon />}
                   sx={{
                     backgroundColor: '#2196f3',
                     '&:hover': {
                       backgroundColor: '#1976d2',
                     },
-                    mt: 'auto', // Push button to bottom
+                    mt: 'auto',
                   }}
                 >
                   Xem chi tiết
@@ -132,6 +141,7 @@ const UpcomingSessions = () => {
                 variant="contained"
                 sx={{ mt: 3 }}
                 onClick={() => navigate('/counseling')}
+                startIcon={<AddCircleOutlineIcon />}
               >
                 Đặt lịch tư vấn mới
               </Button>

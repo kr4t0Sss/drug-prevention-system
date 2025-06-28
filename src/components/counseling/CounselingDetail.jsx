@@ -29,6 +29,13 @@ import {
   EventNote as EventNoteIcon,
   HourglassEmpty as HourglassEmptyIcon,
   Cancel as CancelIcon,
+  PermIdentity as PermIdentityIcon,
+  WorkOutline as WorkOutlineIcon,
+  MilitaryTech as MilitaryTechIcon,
+  Category as CategoryIcon,
+  Notes as NotesIcon,
+  StarOutline as StarOutlineIcon,
+  Refresh as RefreshIcon,
 } from '@mui/icons-material';
 import { format } from 'date-fns';
 
@@ -125,14 +132,14 @@ const CounselingDetail = () => {
             <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 3, p: 2, bgcolor: '#e3f2fd', borderRadius: 1 }}>
               <Avatar src={session.counselor.imageUrl} alt={session.counselor.name} sx={{ width: 70, height: 70 }} />
               <Box>
-                <Typography variant="h5" fontWeight={600} color="primary.dark">
-                  {session.counselor.name}
+                <Typography variant="h5" fontWeight={600} color="primary.dark" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <PermIdentityIcon fontSize="small" /> {session.counselor.name}
                 </Typography>
-                <Typography variant="body1" color="text.secondary">
-                  {session.counselor.title} - {session.counselor.specialization}
+                <Typography variant="body1" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <WorkOutlineIcon fontSize="small" /> {session.counselor.title} - {session.counselor.specialization}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {session.counselor.experience}
+                <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <MilitaryTechIcon fontSize="small" /> {session.counselor.experience}
                 </Typography>
               </Box>
             </Stack>
@@ -184,7 +191,7 @@ const CounselingDetail = () => {
 
           <Grid item xs={12} md={6}>
             <Box display="flex" alignItems="center" mb={2}>
-              <PersonIcon color="primary" sx={{ mr: 2, fontSize: 30 }} />
+              <CategoryIcon color="primary" sx={{ mr: 2, fontSize: 30 }} />
               <Box>
                 <Typography variant="subtitle1" color="text.secondary" fontWeight={500}>
                   Loại phiên
@@ -212,47 +219,68 @@ const CounselingDetail = () => {
             />
           </Grid>
 
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" gutterBottom fontWeight={600}>
-              Ghi chú phiên
+          <Grid item xs={12}>
+            <Typography variant="h6" gutterBottom fontWeight={600} sx={{ mt: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+              <NotesIcon /> Ghi chú
             </Typography>
-            <List sx={{ bgcolor: '#f8f8f8', borderRadius: 1, p: 1 }}>
-              {session.notes.map((note, index) => (
-                <ListItem key={index} disableGutters>
-                  <ListItemIcon sx={{ minWidth: 30 }}>
-                    <DescriptionIcon fontSize="small" color="action" />
-                  </ListItemIcon>
-                  <ListItemText primary={<Typography variant="body2">{note}</Typography>} />
-                </ListItem>
-              ))}
-            </List>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" gutterBottom fontWeight={600}>
-              Mục tiêu điều trị
-            </Typography>
-            <List sx={{ bgcolor: '#f8f8f8', borderRadius: 1, p: 1 }}>
-              {session.goals.map((goal, index) => (
-                <ListItem key={index} disableGutters>
-                  <ListItemIcon sx={{ minWidth: 30 }}>
-                    <FlagIcon fontSize="small" color="action" />
-                  </ListItemIcon>
-                  <ListItemText primary={<Typography variant="body2">{goal}</Typography>} />
-                </ListItem>
-              ))}
-            </List>
+            {session.notes.length > 0 ? (
+              <List dense>
+                {session.notes.map((note, index) => (
+                  <ListItem key={index} sx={{ py: 0.5 }}>
+                    <ListItemIcon sx={{ minWidth: 35 }}>
+                      <DoneIcon color="success" />
+                    </ListItemIcon>
+                    <ListItemText primary={<Typography variant="body2" color="text.primary">{note}</Typography>} />
+                  </ListItem>
+                ))}
+              </List>
+            ) : (
+              <Typography variant="body2" color="text.secondary">Không có ghi chú.</Typography>
+            )}
+            <Divider sx={{ my: 2 }} />
           </Grid>
 
           <Grid item xs={12}>
-            <Stack direction="row" spacing={2} sx={{ mt: 4 }} justifyContent="flex-end">
-              <Button variant="outlined" color="error" size="large" sx={{ px: 3, py: 1.2 }}>
+            <Typography variant="h6" gutterBottom fontWeight={600} sx={{ mt: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+              <StarOutlineIcon /> Mục tiêu
+            </Typography>
+            {session.goals.length > 0 ? (
+              <List dense>
+                {session.goals.map((goal, index) => (
+                  <ListItem key={index} sx={{ py: 0.5 }}>
+                    <ListItemIcon sx={{ minWidth: 35 }}>
+                      <FlagIcon color="info" />
+                    </ListItemIcon>
+                    <ListItemText primary={<Typography variant="body2" color="text.primary">{goal}</Typography>} />
+                  </ListItem>
+                ))}
+              </List>
+            ) : (
+              <Typography variant="body2" color="text.secondary">Không có mục tiêu.</Typography>
+            )}
+            <Divider sx={{ my: 2 }} />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>
+              <Button
+                variant="outlined"
+                color="error"
+                startIcon={<CancelIcon />}
+                sx={{ mr: 2 }}
+                onClick={() => alert('Tính năng hủy phiên chưa được triển khai.')}
+              >
                 Hủy phiên
               </Button>
-              <Button variant="contained" color="primary" size="large" sx={{ px: 3, py: 1.2 }}>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<RefreshIcon />}
+                onClick={() => alert('Tính năng đặt lịch lại chưa được triển khai.')}
+              >
                 Đặt lịch lại
               </Button>
-            </Stack>
+            </Box>
           </Grid>
         </Grid>
       </Paper>
