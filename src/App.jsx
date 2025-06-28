@@ -31,6 +31,9 @@ import AdminDashboard from './components/admin/AdminDashboard';
 import UserManagement from './components/admin/UserManagement';
 import CourseManagement from './components/admin/CourseManagement';
 import AssessmentManagement from './components/admin/AssessmentManagement';
+import CounselingManagement from './components/admin/CounselingManagement';
+import ReportsStatistics from './components/admin/ReportsStatistics';
+import SystemSettings from './components/admin/SystemSettings';
 
 // Configure future flags for React Router v7
 const router = {
@@ -125,6 +128,21 @@ function App() {
                 <Route path="assessments" element={
                   <PrivateRoute>
                     <AssessmentManagement />
+                  </PrivateRoute>
+                } />
+                <Route path="counseling" element={
+                  <PrivateRoute>
+                    <CounselingManagement />
+                  </PrivateRoute>
+                } />
+                <Route path="reports" element={
+                  <PrivateRoute>
+                    <ReportsStatistics />
+                  </PrivateRoute>
+                } />
+                <Route path="settings" element={
+                  <PrivateRoute>
+                    <SystemSettings />
                   </PrivateRoute>
                 } />
               </Route>

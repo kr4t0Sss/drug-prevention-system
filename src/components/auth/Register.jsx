@@ -100,7 +100,7 @@ const Register = () => {
       });
       
       await register(formData.email, formData.password, formData.name);
-      navigate('/');
+    navigate('/');
     } catch (error) {
       console.error('Registration error:', error);
       setError(error.message || 'Đăng ký thất bại. Vui lòng thử lại.');
@@ -110,19 +110,19 @@ const Register = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         justifyContent: 'center',
         minHeight: '100vh',
         backgroundImage: 'url(/images/auth-background.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         py: 4,
-      }}
-    >
+        }}
+      >
       <Container component="main" maxWidth="xs">
         <Paper
           elevation={6}
@@ -258,7 +258,7 @@ const Register = () => {
           </Box>
         </Paper>
       </Container>
-    </Box>
+      </Box>
   );
 };
 

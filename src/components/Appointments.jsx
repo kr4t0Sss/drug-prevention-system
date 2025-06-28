@@ -155,7 +155,7 @@ const Appointments = () => {
           <EventNoteIcon sx={{ fontSize: 40, color: 'white' }} />
         </Avatar>
         <Typography variant="h3" component="h1" gutterBottom fontWeight={700} color="primary.dark">
-          Đặt lịch tư vấn
+        Đặt lịch tư vấn
         </Typography>
         <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 800, mx: 'auto', lineHeight: 1.6 }}>
           Chọn loại hình tư vấn phù hợp với nhu cầu của bạn. Đội ngũ chuyên gia của chúng tôi sẵn sàng hỗ trợ bạn 24/7.
@@ -167,8 +167,8 @@ const Appointments = () => {
         <Box sx={{ mb: 8 }}>
           <Typography variant="h4" fontWeight={700} gutterBottom color="primary.dark" sx={{ mb: 4 }}>
             Lịch hẹn sắp tới
-          </Typography>
-          <Grid container spacing={3}>
+      </Typography>
+      <Grid container spacing={3}>
             {upcomingAppointments.map((appointment) => (
               <Grid item xs={12} md={6} key={appointment.id}>
                 <Paper
@@ -184,8 +184,8 @@ const Appointments = () => {
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
                     <Box>
                       <Typography variant="h6" fontWeight={600} gutterBottom color="primary.dark">
-                        {appointment.title}
-                      </Typography>
+                  {appointment.title}
+                </Typography>
                       <Typography variant="body2" color="text.secondary">
                         {appointment.counselor}
                       </Typography>
@@ -310,7 +310,7 @@ const Appointments = () => {
                           <CheckCircleIcon sx={{ fontSize: 16, color: appointmentType.color }} />
                           <Typography variant="body2" color="text.secondary">
                             {feature}
-                          </Typography>
+                </Typography>
                         </Box>
                       ))}
                     </Stack>
@@ -336,13 +336,13 @@ const Appointments = () => {
                     }}
                   >
                     Đặt lịch ngay
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
 
       {/* Quick Actions */}
       <Paper

@@ -350,7 +350,7 @@ const CourseView = () => {
               <>
                 <Typography variant="h4" gutterBottom fontWeight={700} color="primary.dark" sx={{ mb: 3 }}>
                   {currentModule.title}
-                </Typography>
+        </Typography>
                 <Divider sx={{ mb: 3 }} />
                 <Box sx={{ lineHeight: 1.8 }}>
                   {currentModule.content}
@@ -397,7 +397,7 @@ const CourseView = () => {
                     }}
                   >
                     Bài học tiếp theo
-                  </Button>
+        </Button>
                 </Stack>
               </>
             ) : (
@@ -405,7 +405,7 @@ const CourseView = () => {
                 <Typography variant="h5" color="text.secondary">Vui lòng chọn một module để bắt đầu.</Typography>
               </Box>
             )}
-          </Paper>
+      </Paper>
         </Grid>
       </Grid>
     </Container>

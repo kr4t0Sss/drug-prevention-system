@@ -196,8 +196,8 @@ const CourseDetail = () => {
         </Typography>
         <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 900, mx: 'auto', mb: 3 }}>
           {course.description}
-        </Typography>
-      </Box>
+          </Typography>
+        </Box>
 
       <Paper elevation={6} sx={{ p: { xs: 3, md: 5 }, borderRadius: 3, bgcolor: 'background.paper', overflow: 'hidden' }}>
         <Grid container spacing={4}>

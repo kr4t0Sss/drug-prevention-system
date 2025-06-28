@@ -173,8 +173,8 @@ const Profile = () => {
       {/* Header Section */}
       <Box sx={{ textAlign: 'center', mb: 6 }}>
         <Typography variant="h3" component="h1" gutterBottom fontWeight={700} color="primary.dark">
-          Hồ sơ cá nhân
-        </Typography>
+            Hồ sơ cá nhân
+          </Typography>
         <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto' }}>
           Quản lý thông tin cá nhân và theo dõi tiến trình học tập của bạn
         </Typography>
@@ -227,8 +227,8 @@ const Profile = () => {
                   {formData.name?.charAt(0)}
                 </Avatar>
               </Badge>
-            </Box>
-            
+        </Box>
+
             <Typography variant="h5" fontWeight={700} gutterBottom color="primary.dark">
               {formData.name}
             </Typography>
@@ -348,73 +348,73 @@ const Profile = () => {
                 icon={<ListAltIcon />} 
                 iconPosition="start"
               />
-            </Tabs>
+        </Tabs>
 
             <Box sx={{ p: 4 }}>
               {/* Personal Information Tab */}
               <TabPanel value={activeTab} index={0}>
                 <Box component="form" onSubmit={handleSubmit}>
-                  <Grid container spacing={3}>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        fullWidth
-                        label="Họ và tên"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label="Họ và tên"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                         variant="outlined"
                         disabled={!isEditing}
                         InputProps={{
                           startAdornment: <PersonOutlineIcon sx={{ mr: 1, color: 'text.secondary' }} />,
                         }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        fullWidth
-                        label="Email"
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label="Email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
                         variant="outlined"
                         disabled
                         InputProps={{
                           startAdornment: <EmailIcon sx={{ mr: 1, color: 'text.secondary' }} />,
                         }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        fullWidth
-                        label="Số điện thoại"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label="Số điện thoại"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
                         variant="outlined"
                         disabled={!isEditing}
                         placeholder="Nhập số điện thoại"
                         InputProps={{
                           startAdornment: <PhoneIcon sx={{ mr: 1, color: 'text.secondary' }} />,
                         }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        fullWidth
-                        label="Địa chỉ"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label="Địa chỉ"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
                         variant="outlined"
                         disabled={!isEditing}
                         placeholder="Nhập địa chỉ"
                         InputProps={{
                           startAdornment: <LocationOnIcon sx={{ mr: 1, color: 'text.secondary' }} />,
                         }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
+                />
+              </Grid>
+              <Grid item xs={12}>
                       <TextField
                         fullWidth
                         label="Giới thiệu bản thân"
@@ -430,8 +430,8 @@ const Profile = () => {
                           startAdornment: <DescriptionIcon sx={{ mr: 1, color: 'text.secondary', alignSelf: 'flex-start', mt: 1 }} />,
                         }}
                       />
-                    </Grid>
-                  </Grid>
+              </Grid>
+            </Grid>
                   
                   {isEditing && (
                     <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
@@ -463,7 +463,7 @@ const Profile = () => {
               {/* Appointment History Tab */}
               <TabPanel value={activeTab} index={1}>
                 <Stack spacing={3}>
-                  {appointmentHistory.map((appointment) => (
+                {appointmentHistory.map((appointment) => (
                     <Card 
                       key={appointment.id} 
                       variant="outlined" 
@@ -541,7 +541,7 @@ const Profile = () => {
               {/* Program History Tab */}
               <TabPanel value={activeTab} index={2}>
                 <Stack spacing={3}>
-                  {programHistory.map((program) => (
+                {programHistory.map((program) => (
                     <Card 
                       key={program.id} 
                       variant="outlined" 
@@ -620,15 +620,15 @@ const Profile = () => {
                         </Grid>
                       </Grid>
                     </Card>
-                  ))}
+                ))}
                 </Stack>
               </TabPanel>
             </Box>
-          </Paper>
+      </Paper>
         </Grid>
       </Grid>
     </Container>
   );
 };
 
-export default Profile;
+export default Profile; 

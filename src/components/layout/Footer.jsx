@@ -195,7 +195,7 @@ const Footer = () => {
                 <EmailIcon sx={{ fontSize: 20, color: '#90caf9' }} />
                 <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
                   info@phongchongmatuy.gov.vn
-                </Typography>
+        </Typography>
               </Box>
             </Stack>
 
@@ -203,7 +203,7 @@ const Footer = () => {
             <Box sx={{ mt: 3 }}>
               <Typography variant="subtitle2" sx={{ mb: 2, color: '#bbdefb' }}>
                 Theo dõi chúng tôi
-              </Typography>
+        </Typography>
               <Stack direction="row" spacing={1}>
                 {[
                   { icon: <FacebookIcon />, color: '#1877f2' },
@@ -242,7 +242,7 @@ const Footer = () => {
         >
           <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
             © {new Date().getFullYear()} Hệ thống Phòng chống Ma túy. Mọi quyền được bảo lưu.
-          </Typography>
+        </Typography>
           
           <Stack direction="row" spacing={3}>
             {['Chính sách bảo mật', 'Điều khoản sử dụng', 'Sitemap'].map((text, index) => (

@@ -111,8 +111,8 @@ const CourseList = () => {
       <Box sx={{ textAlign: 'center', mb: 6 }}>
         <SchoolIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
         <Typography variant="h3" component="h1" gutterBottom fontWeight={700} color="primary.dark">
-          Khóa học phòng chống ma túy
-        </Typography>
+        Khóa học phòng chống ma túy
+      </Typography>
         <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 800, mx: 'auto', mb: 3 }}>
           Nâng cao kiến thức và kỹ năng của bạn về phòng chống ma túy với các khóa học đa dạng, phù hợp với mọi đối tượng.
         </Typography>
@@ -207,7 +207,7 @@ const CourseList = () => {
                         size="small" 
                         sx={{ fontWeight: 'bold', fontSize: '0.75rem' }} 
                       />
-                    </Stack>
+                </Stack>
                     
                     <Typography 
                       variant="h5" 
@@ -222,8 +222,8 @@ const CourseList = () => {
                         mb: 2
                       }}
                     >
-                      {course.title}
-                    </Typography>
+                  {course.title}
+                </Typography>
                   </Box>
                   
                   {/* Middle Section */}
@@ -241,24 +241,24 @@ const CourseList = () => {
                         mb: 3
                       }}
                     >
-                      {course.description}
-                    </Typography>
+                  {course.description}
+                </Typography>
                     
                     {/* Bottom Section */}
                     <Stack direction="row" alignItems="center" spacing={1}>
                       <AccessTimeIcon fontSize="small" color="action" />
                       <Typography variant="body2" color="text.secondary" fontWeight={500}>
                         Thời lượng: {course.duration}
-                      </Typography>
+                </Typography>
                     </Stack>
                   </Box>
                 </CardContent>
                 <Box sx={{ p: 4, pt: 0 }}>
-                  <Button
-                    variant="contained"
+                <Button
+                  variant="contained"
                     size="large"
                     fullWidth
-                    onClick={() => navigate(`/courses/${course.id}`)}
+                  onClick={() => navigate(`/courses/${course.id}`)}
                     sx={{
                       background: 'linear-gradient(45deg, #2196f3 30%, #21cbf3 90%)',
                       '&:hover': {
@@ -274,11 +274,11 @@ const CourseList = () => {
                       textTransform: 'none',
                       boxShadow: '0 4px 12px rgba(33, 150, 243, 0.3)',
                     }}
-                  >
-                    Xem nội dung
-                  </Button>
+                >
+                  Xem nội dung
+                </Button>
                 </Box>
-              </Card>
+            </Card>
             </Grid>
           ))
         ) : (

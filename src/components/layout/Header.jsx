@@ -124,7 +124,7 @@ const Header = () => {
               }}
             >
               Bảo vệ cộng đồng - Xây dựng tương lai
-            </Typography>
+        </Typography>
           </Box>
         </Box>
         
@@ -134,12 +134,12 @@ const Header = () => {
               (item.path !== '/' && location.pathname.startsWith(item.path));
             
             return (
-              <Button
-                key={item.text}
-                color="inherit"
-                startIcon={item.icon}
-                onClick={() => navigate(item.path)}
-                sx={{
+            <Button
+              key={item.text}
+              color="inherit"
+              startIcon={item.icon}
+              onClick={() => navigate(item.path)}
+              sx={{
                   color: 'white',
                   backgroundColor: isActive ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
                   backdropFilter: isActive ? 'blur(10px)' : 'none',
@@ -147,8 +147,8 @@ const Header = () => {
                   borderRadius: 2,
                   px: 2.5,
                   py: 1,
-                  '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
                     backdropFilter: 'blur(10px)',
                     border: '1px solid rgba(255, 255, 255, 0.3)',
                     transform: 'translateY(-1px)',
@@ -159,11 +159,11 @@ const Header = () => {
                   transition: 'all 0.2s ease',
                   '& .MuiButton-startIcon': {
                     mr: 1,
-                  },
-                }}
-              >
-                {item.text}
-              </Button>
+                },
+              }}
+            >
+              {item.text}
+            </Button>
             );
           })}
         </Stack>
@@ -338,8 +338,8 @@ const Header = () => {
                 transition: 'all 0.2s ease',
               }}
             >
-              Đăng nhập
-            </Button>
+            Đăng nhập
+          </Button>
           </Stack>
         )}
       </Toolbar>
