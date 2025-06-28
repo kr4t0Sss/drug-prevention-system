@@ -21,7 +21,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { register } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -29,6 +29,7 @@ const Register = () => {
     confirmPassword: '',
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -71,9 +72,10 @@ const Register = () => {
     if (name === 'confirmPassword') setConfirmPasswordError('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     const nameValidationMsg = validateName(formData.name);
     const emailValidationMsg = validateEmail(formData.email);
@@ -86,13 +88,25 @@ const Register = () => {
     setConfirmPasswordError(confirmPasswordValidationMsg);
 
     if (nameValidationMsg || emailValidationMsg || passwordValidationMsg || confirmPasswordValidationMsg) {
+      setLoading(false);
       return; // Stop if there are validation errors
     }
 
-    // TODO: Implement actual registration logic
-    console.log('Attempting registration with:', formData);
-    login({ email: formData.email });
-    navigate('/');
+    try {
+      console.log('Attempting registration with:', {
+        email: formData.email,
+        password: formData.password,
+        name: formData.name
+      });
+      
+      await register(formData.email, formData.password, formData.name);
+      navigate('/');
+    } catch (error) {
+      console.error('Registration error:', error);
+      setError(error.message || 'Đăng ký thất bại. Vui lòng thử lại.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -222,6 +236,7 @@ const Register = () => {
               type="submit"
               fullWidth
               variant="contained"
+              disabled={loading}
               sx={{
                 mt: 3,
                 mb: 2,
@@ -233,7 +248,7 @@ const Register = () => {
                 fontSize: '1.1rem',
               }}
             >
-              Đăng ký
+              {loading ? 'Đang đăng ký...' : 'Đăng ký'}
             </Button>
             <Box sx={{ textAlign: 'center' }}>
               <Link href="/login" variant="body1" sx={{ color: '#1976d2', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>

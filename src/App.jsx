@@ -1,3 +1,4 @@
+import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
@@ -24,6 +25,7 @@ import AssistAssessment from './components/assessment/AssistAssessment';
 import CrafftAssessment from './components/assessment/CrafftAssessment';
 import CounselingList from './components/counseling/CounselingList';
 import CounselingDetail from './components/counseling/CounselingDetail';
+import Appointments from './components/Appointments';
 
 // Configure future flags for React Router v7
 const router = {
@@ -51,6 +53,11 @@ function App() {
                 <Route path="/profile" element={
                   <PrivateRoute>
                     <Profile />
+                  </PrivateRoute>
+                } />
+                <Route path="/appointments" element={
+                  <PrivateRoute>
+                    <Appointments />
                   </PrivateRoute>
                 } />
                 <Route path="/courses" element={<CourseList />} />

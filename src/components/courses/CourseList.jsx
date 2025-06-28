@@ -27,7 +27,7 @@ const courses = [
     id: 1,
     title: 'Kiến thức cơ bản về ma túy',
     description: 'Tìm hiểu về các loại ma túy phổ biến, tác hại của chúng đối với sức khỏe và xã hội, cũng như các dấu hiệu nhận biết cơ bản.',
-    image: '/images/courses/course1.jpg',
+    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=250&fit=crop&auto=format',
     level: 'Cơ bản',
     target: 'Học sinh, Sinh viên',
     duration: '2 giờ',
@@ -36,7 +36,7 @@ const courses = [
     id: 2,
     title: 'Kỹ năng từ chối và đối phó',
     description: 'Học các kỹ năng cần thiết để từ chối ma túy một cách tự tin, đối phó với áp lực bạn bè và xây dựng môi trường an toàn.',
-    image: '/images/courses/course2.jpg',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=250&fit=crop&auto=format',
     level: 'Trung cấp',
     target: 'Thanh thiếu niên, Người trẻ',
     duration: '3 giờ',
@@ -45,7 +45,7 @@ const courses = [
     id: 3,
     title: 'Vai trò của gia đình trong phòng chống ma túy',
     description: 'Dành cho phụ huynh: Cách nhận biết sớm các dấu hiệu, hỗ trợ con em và xây dựng môi trường gia đình lành mạnh.',
-    image: '/images/courses/course3.jpg',
+    image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=400&h=250&fit=crop&auto=format',
     level: 'Nâng cao',
     target: 'Phụ huynh, Người chăm sóc',
     duration: '4 giờ',
@@ -54,14 +54,32 @@ const courses = [
     id: 4,
     title: 'Chương trình phục hồi toàn diện',
     description: 'Tổng quan về các phương pháp phục hồi, hỗ trợ tâm lý và tái hòa nhập cộng đồng cho người đã từng sử dụng ma túy.',
-    image: '/images/courses/course4.jpg',
+    image: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=250&fit=crop&auto=format',
     level: 'Nâng cao',
     target: 'Chuyên gia, Cộng đồng',
     duration: '5 giờ',
   },
+  {
+    id: 5,
+    title: 'Tâm lý học và nghiện chất',
+    description: 'Hiểu sâu về cơ chế tâm lý của nghiện chất, các yếu tố nguy cơ và phương pháp can thiệp tâm lý hiệu quả.',
+    image: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400&h=250&fit=crop&auto=format',
+    level: 'Trung cấp',
+    target: 'Chuyên gia, Cộng đồng',
+    duration: '3.5 giờ',
+  },
+  {
+    id: 6,
+    title: 'Xây dựng cộng đồng an toàn',
+    description: 'Các chiến lược xây dựng môi trường cộng đồng an toàn, không có ma túy thông qua sự tham gia của người dân.',
+    image: 'https://images.unsplash.com/photo-1529390079861-591de354faf5?w=400&h=250&fit=crop&auto=format',
+    level: 'Cơ bản',
+    target: 'Cộng đồng',
+    duration: '2.5 giờ',
+  },
 ];
 
-const targetGroups = ['Tất cả', 'Học sinh, Sinh viên', 'Thanh thiếu niên, Người trẻ', 'Phụ huynh, Người chăm sóc', 'Chuyên gia, Cộng đồng'];
+const targetGroups = ['Tất cả', 'Học sinh, Sinh viên', 'Thanh thiếu niên, Người trẻ', 'Phụ huynh, Người chăm sóc', 'Chuyên gia, Cộng đồng', 'Cộng đồng'];
 const levels = ['Tất cả', 'Cơ bản', 'Trung cấp', 'Nâng cao'];
 
 const CourseList = () => {
@@ -152,65 +170,109 @@ const CourseList = () => {
       </Stack>
 
       {/* Course List */}
-      <Grid container spacing={4}>
+      <Grid container spacing={4} sx={{ alignItems: 'stretch' }}>
         {filteredCourses.length > 0 ? (
           filteredCourses.map((course) => (
-            <Grid item xs={12} md={6} lg={4} key={course.id}>
+            <Grid item xs={12} md={6} lg={4} key={course.id} sx={{ display: 'flex' }}>
               <Card
                 sx={{
-                  height: '100%',
+                  width: '100%',
                   display: 'flex',
                   flexDirection: 'column',
-                  boxShadow: 3,
-                  '&:hover': { boxShadow: 6, transform: 'translateY(-5px)' },
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                  '&:hover': { 
+                    boxShadow: '0 8px 25px rgba(0,0,0,0.15)', 
+                    transform: 'translateY(-8px)' 
+                  },
                   transition: 'all 0.3s ease-in-out',
-                  borderRadius: 2,
+                  borderRadius: 3,
                   overflow: 'hidden',
+                  border: '1px solid rgba(0,0,0,0.08)',
+                  background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
                 }}
               >
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={course.image}
-                  alt={course.title}
-                  sx={{
-                    width: '100%',
-                    objectFit: 'cover',
-                    borderTopLeftRadius: 2,
-                    borderTopRightRadius: 2,
-                  }}
-                />
-                <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                  <Stack direction="row" spacing={1} sx={{ mb: 1.5 }}>
-                    <Chip label={course.level} color="primary" size="small" sx={{ fontWeight: 'bold' }} />
-                    <Chip label={course.target} color="secondary" size="small" sx={{ fontWeight: 'bold' }} />
-                  </Stack>
-                  <Typography variant="h5" component="h2" gutterBottom fontWeight={600} sx={{ minHeight: 60 }}>
-                    {course.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2, minHeight: 70, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {course.description}
-                  </Typography>
-                  <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
-                    <AccessTimeIcon fontSize="small" color="action" />
-                    <Typography variant="body2" color="text.secondary">
-                      Thời lượng: {course.duration}
+                <CardContent sx={{ flexGrow: 1, p: 4, display: 'flex', flexDirection: 'column' }}>
+                  {/* Top Section */}
+                  <Box sx={{ mb: 3 }}>
+                    <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap', gap: 1 }}>
+                      <Chip 
+                        label={course.level} 
+                        color="primary" 
+                        size="small" 
+                        sx={{ fontWeight: 'bold', fontSize: '0.75rem' }} 
+                      />
+                      <Chip 
+                        label={course.target} 
+                        color="secondary" 
+                        size="small" 
+                        sx={{ fontWeight: 'bold', fontSize: '0.75rem' }} 
+                      />
+                    </Stack>
+                    
+                    <Typography 
+                      variant="h5" 
+                      component="h2" 
+                      fontWeight={700} 
+                      sx={{ 
+                        minHeight: 70, 
+                        display: 'flex', 
+                        alignItems: 'flex-start',
+                        lineHeight: 1.3,
+                        color: 'primary.dark',
+                        mb: 2
+                      }}
+                    >
+                      {course.title}
                     </Typography>
-                  </Stack>
+                  </Box>
+                  
+                  {/* Middle Section */}
+                  <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Typography 
+                      variant="body2" 
+                      color="text.secondary" 
+                      sx={{ 
+                        minHeight: 75, 
+                        overflow: 'hidden', 
+                        display: '-webkit-box',
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: 'vertical',
+                        lineHeight: 1.5,
+                        mb: 3
+                      }}
+                    >
+                      {course.description}
+                    </Typography>
+                    
+                    {/* Bottom Section */}
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                      <AccessTimeIcon fontSize="small" color="action" />
+                      <Typography variant="body2" color="text.secondary" fontWeight={500}>
+                        Thời lượng: {course.duration}
+                      </Typography>
+                    </Stack>
+                  </Box>
                 </CardContent>
-                <Box sx={{ p: 3, pt: 0 }}>
+                <Box sx={{ p: 4, pt: 0 }}>
                   <Button
                     variant="contained"
                     size="large"
                     fullWidth
                     onClick={() => navigate(`/courses/${course.id}`)}
                     sx={{
-                      backgroundColor: '#2196f3',
+                      background: 'linear-gradient(45deg, #2196f3 30%, #21cbf3 90%)',
                       '&:hover': {
-                        backgroundColor: '#1976d2',
+                        background: 'linear-gradient(45deg, #1976d2 30%, #1cb5e0 90%)',
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 6px 20px rgba(33, 150, 243, 0.4)',
                       },
-                      py: 1,
+                      py: 1.5,
                       fontSize: '1rem',
+                      fontWeight: 600,
+                      borderRadius: 2,
+                      transition: 'all 0.3s ease-in-out',
+                      textTransform: 'none',
+                      boxShadow: '0 4px 12px rgba(33, 150, 243, 0.3)',
                     }}
                   >
                     Xem nội dung

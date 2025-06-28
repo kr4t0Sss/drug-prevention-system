@@ -72,13 +72,12 @@ const Login = () => {
     }
 
     try {
-      // This is a placeholder for actual login logic
-      // In a real application, you would use firebase.auth().signInWithEmailAndPassword(formData.email, formData.password)
       console.log('Attempting login with:', formData.email, formData.password);
-      login({ email: formData.email });
+      await login(formData.email, formData.password);
       navigate('/');
     } catch (err) {
-      setError('Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.');
+      console.error('Login error:', err);
+      setError(err.message || 'Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.');
     }
   };
 
