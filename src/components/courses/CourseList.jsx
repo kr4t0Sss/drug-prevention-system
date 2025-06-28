@@ -21,43 +21,48 @@ import SchoolIcon from '@mui/icons-material/School'; // Icon for courses
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import GroupIcon from '@mui/icons-material/Group';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 
 const courses = [
   {
     id: 1,
     title: 'Kiến thức cơ bản về ma túy',
-    description: 'Tìm hiểu về các loại ma túy phổ biến, tác hại của chúng đối với sức khỏe và xã hội, cũng như các dấu hiệu nhận biết cơ bản.',
+    description: 'Cung cấp kiến thức nền tảng về các loại ma túy, tác hại và cách phòng chống. Bao gồm 4 module với video bài học.',
     image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=250&fit=crop&auto=format',
     level: 'Cơ bản',
     target: 'Học sinh, Sinh viên',
-    duration: '2 giờ',
+    duration: '4 module',
+    hasVideo: true,
   },
   {
     id: 2,
     title: 'Kỹ năng từ chối và đối phó',
-    description: 'Học các kỹ năng cần thiết để từ chối ma túy một cách tự tin, đối phó với áp lực bạn bè và xây dựng môi trường an toàn.',
+    description: 'Học cách từ chối ma túy, đối phó với áp lực bạn bè và xây dựng lối sống lành mạnh. Có thực hành tình huống thực tế.',
     image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=250&fit=crop&auto=format',
     level: 'Trung cấp',
     target: 'Thanh thiếu niên, Người trẻ',
-    duration: '3 giờ',
+    duration: '4 module',
+    hasVideo: true,
   },
   {
     id: 3,
-    title: 'Vai trò của gia đình trong phòng chống ma túy',
-    description: 'Dành cho phụ huynh: Cách nhận biết sớm các dấu hiệu, hỗ trợ con em và xây dựng môi trường gia đình lành mạnh.',
+    title: 'Hỗ trợ người nghiện và gia đình',
+    description: 'Cung cấp kiến thức và kỹ năng hỗ trợ người nghiện ma túy và gia đình họ trong quá trình cai nghiện và tái hòa nhập.',
     image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=400&h=250&fit=crop&auto=format',
     level: 'Nâng cao',
     target: 'Phụ huynh, Người chăm sóc',
-    duration: '4 giờ',
+    duration: '3 module',
+    hasVideo: true,
   },
   {
     id: 4,
-    title: 'Chương trình phục hồi toàn diện',
-    description: 'Tổng quan về các phương pháp phục hồi, hỗ trợ tâm lý và tái hòa nhập cộng đồng cho người đã từng sử dụng ma túy.',
+    title: 'Phòng chống ma túy trong cộng đồng',
+    description: 'Xây dựng cộng đồng mạnh mẽ để phòng chống ma túy hiệu quả thông qua giáo dục, tuyên truyền và hỗ trợ.',
     image: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=250&fit=crop&auto=format',
     level: 'Nâng cao',
     target: 'Chuyên gia, Cộng đồng',
-    duration: '5 giờ',
+    duration: '2 module',
+    hasVideo: true,
   },
   {
     id: 5,
@@ -67,6 +72,7 @@ const courses = [
     level: 'Trung cấp',
     target: 'Chuyên gia, Cộng đồng',
     duration: '3.5 giờ',
+    hasVideo: false,
   },
   {
     id: 6,
@@ -76,6 +82,7 @@ const courses = [
     level: 'Cơ bản',
     target: 'Cộng đồng',
     duration: '2.5 giờ',
+    hasVideo: false,
   },
 ];
 
@@ -207,6 +214,15 @@ const CourseList = () => {
                         size="small" 
                         sx={{ fontWeight: 'bold', fontSize: '0.75rem' }} 
                       />
+                      {course.hasVideo && (
+                        <Chip 
+                          icon={<OndemandVideoIcon sx={{ fontSize: '16px !important' }} />}
+                          label="Video" 
+                          color="success" 
+                          size="small" 
+                          sx={{ fontWeight: 'bold', fontSize: '0.75rem' }} 
+                        />
+                      )}
                 </Stack>
                     
                     <Typography 
@@ -258,7 +274,7 @@ const CourseList = () => {
                   variant="contained"
                     size="large"
                     fullWidth
-                  onClick={() => navigate(`/courses/${course.id}`)}
+                  onClick={() => navigate(`/courses/view/${course.id}`)}
                     sx={{
                       background: 'linear-gradient(45deg, #2196f3 30%, #21cbf3 90%)',
                       '&:hover': {

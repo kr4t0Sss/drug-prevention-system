@@ -33,8 +33,8 @@ import { useAuth } from '../../contexts/AuthContext';
 const menuItems = [
   { text: 'Trang chủ', icon: <HomeIcon />, path: '/' },
   { text: 'Khóa học', icon: <SchoolIcon />, path: '/courses' },
-  { text: 'Đánh giá', icon: <AssessmentIcon />, path: '/assessment' },
-  { text: 'Tư vấn', icon: <PsychologyIcon />, path: '/counseling' },
+  { text: 'Đánh giá', icon: <AssessmentIcon />, path: '/assessment-main' },
+  { text: 'Tư vấn', icon: <PsychologyIcon />, path: '/counseling-main' },
   { text: 'Chương trình', icon: <ProgramIcon />, path: '/programs' },
 ];
 

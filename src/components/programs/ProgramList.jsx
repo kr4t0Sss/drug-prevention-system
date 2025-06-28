@@ -22,6 +22,7 @@ import {
   IconButton,
   Tooltip,
   Alert,
+  Fade,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -40,6 +41,8 @@ import {
   Groups as GroupsIcon,
   CalendarToday as CalendarTodayIcon,
   AccessTime as AccessTimeIcon,
+  PersonAdd as PersonAddIcon,
+  VolunteerActivism as VolunteerIcon,
 } from '@mui/icons-material';
 import { format } from 'date-fns';
 
@@ -200,222 +203,222 @@ const ProgramList = () => {
     <Container maxWidth="lg" sx={{ py: 6 }}>
       {/* Header Section */}
       <Box sx={{ textAlign: 'center', mb: 6 }}>
-        <GroupsIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
+        <VolunteerIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
         <Typography variant="h3" component="h1" gutterBottom fontWeight={700} color="primary.dark">
-          Các chương trình cộng đồng
+          Chương trình Phòng chống Ma túy
         </Typography>
         <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 800, mx: 'auto', lineHeight: 1.6 }}>
-          Khám phá các chương trình giáo dục, hội thảo, và hỗ trợ cộng đồng của chúng tôi nhằm tăng cường nhận thức và phòng chống ma túy hiệu quả.
+          Tham gia các chương trình giáo dục và hỗ trợ cộng đồng nhằm nâng cao nhận thức và phòng chống tệ nạn xã hội
         </Typography>
       </Box>
 
       {/* Introduction Section */}
-      <Paper elevation={2} sx={{ p: 4, mb: 6, borderRadius: 3, background: 'linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%)' }}>
-        <Typography variant="h5" gutterBottom fontWeight={600} color="primary.dark">
-          Tại sao tham gia các chương trình của chúng tôi?
-        </Typography>
-        <Grid container spacing={3} sx={{ mt: 2 }}>
-          <Grid item xs={12} md={4}>
-            <Box sx={{ textAlign: 'center' }}>
-              <SchoolIcon sx={{ fontSize: 50, color: '#4caf50', mb: 2 }} />
-              <Typography variant="h6" fontWeight={600} gutterBottom>Giáo dục toàn diện</Typography>
-              <Typography color="text.secondary">
-                Cung cấp kiến thức chuyên sâu và thực tiễn về phòng chống ma túy
+      <Paper 
+        elevation={3} 
+        sx={{ 
+          p: 4, 
+          mb: 6, 
+          borderRadius: 3,
+          background: 'linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%)',
+          border: '1px solid rgba(33, 150, 243, 0.1)'
+        }}
+      >
+        <Grid container spacing={4} alignItems="center">
+          <Grid item xs={12} md={8}>
+            <Typography variant="h5" gutterBottom fontWeight={600} color="primary.dark">
+              Tại sao nên tham gia các chương trình của chúng tôi?
+            </Typography>
+            <Typography variant="body1" paragraph sx={{ lineHeight: 1.8, color: 'text.secondary' }}>
+              Các chương trình phòng chống ma túy của chúng tôi được thiết kế dựa trên nghiên cứu khoa học và kinh nghiệm thực tế, 
+              nhằm cung cấp kiến thức toàn diện và kỹ năng thiết thực cho từng đối tượng cụ thể.
+            </Typography>
+            <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
+              <Chip icon={<SchoolIcon />} label="Giáo dục chuyên nghiệp" color="primary" variant="outlined" />
+              <Chip icon={<GroupsIcon />} label="Hỗ trợ cộng đồng" color="primary" variant="outlined" />
+              <Chip icon={<CheckCircleOutlineIcon />} label="Hiệu quả cao" color="primary" variant="outlined" />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={4} sx={{ textAlign: 'center' }}>
+            <Box
+              sx={{
+                width: 200,
+                height: 200,
+                borderRadius: '50%',
+                background: 'linear-gradient(45deg, #2196f3, #21cbf3)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                mx: 'auto',
+                boxShadow: '0 8px 32px rgba(33, 150, 243, 0.3)',
+              }}
+            >
+              <Typography variant="h2" fontWeight={700} color="white">
+                {programs.length}
               </Typography>
             </Box>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box sx={{ textAlign: 'center' }}>
-              <GroupsIcon sx={{ fontSize: 50, color: '#ff9800', mb: 2 }} />
-              <Typography variant="h6" fontWeight={600} gutterBottom>Cộng đồng hỗ trợ</Typography>
-              <Typography color="text.secondary">
-                Kết nối với cộng đồng quan tâm và các chuyên gia trong lĩnh vực
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box sx={{ textAlign: 'center' }}>
-              <CheckCircleOutlineIcon sx={{ fontSize: 50, color: '#2196f3', mb: 2 }} />
-              <Typography variant="h6" fontWeight={600} gutterBottom>Hiệu quả thực tế</Typography>
-              <Typography color="text.secondary">
-                Các phương pháp đã được kiểm chứng và áp dụng thành công
-      </Typography>
-            </Box>
+            <Typography variant="h6" sx={{ mt: 2 }} color="primary.dark">
+              Chương trình đang triển khai
+            </Typography>
           </Grid>
         </Grid>
       </Paper>
 
       {/* Programs Grid */}
       <Grid container spacing={4}>
-        {programs.map((program) => (
+        {programs.map((program, index) => (
           <Grid item xs={12} md={6} lg={6} key={program.id}>
-            <Card 
-              elevation={3} 
-              sx={{ 
-                height: '100%', 
-                borderRadius: 3,
-                transition: 'all 0.3s ease-in-out',
-                '&:hover': {
-                  transform: 'translateY(-8px)',
-                  boxShadow: '0 12px 24px rgba(0,0,0,0.15)',
-                },
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="200"
-                image={program.image || '/images/programs/default.jpg'}
-                alt={program.title}
-                sx={{ 
-                  objectFit: 'cover',
-                  borderTopLeftRadius: 12,
-                  borderTopRightRadius: 12,
+            <Fade in={true} timeout={500 + index * 200}>
+              <Card
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  borderRadius: 3,
+                  overflow: 'hidden',
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                    transform: 'translateY(-8px)',
+                    boxShadow: '0 12px 40px rgba(0,0,0,0.15)',
+                  },
+                  border: '1px solid rgba(0,0,0,0.08)',
                 }}
-              />
-              <CardContent sx={{ p: 3, height: 'calc(100% - 200px)', display: 'flex', flexDirection: 'column' }}>
-                <Box sx={{ mb: 2 }}>
-                  <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
-                    {getTargetIcon(program.target)}
-                  <Chip
-                    label={program.target}
-                    size="small"
-                      sx={{ 
-                        backgroundColor: '#e3f2fd',
-                        color: '#1976d2',
-                        fontWeight: 600,
-                      }} 
-                    />
+              >
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={program.image || '/images/programs/default.jpg'}
+                  alt={program.title}
+                  sx={{
+                    objectFit: 'cover',
+                    backgroundColor: '#f5f5f5',
+                  }}
+                  onError={(e) => {
+                    e.target.src = '/images/programs/default.jpg';
+                  }}
+                />
+                <CardContent sx={{ flexGrow: 1, p: 3 }}>
+                  <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 2 }}>
                     {getStatusChip(program.status)}
-                </Stack>
-                  <Typography variant="h6" component="h3" fontWeight={700} color="text.primary" sx={{ mb: 1 }}>
-                  {program.title}
-                </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6, mb: 2 }}>
-                  {program.description}
-                </Typography>
-                </Box>
-
-                <Box sx={{ mb: 2 }}>
-                  <Stack spacing={1}>
                     <Stack direction="row" alignItems="center" spacing={1}>
-                      <CalendarTodayIcon sx={{ fontSize: 16, color: '#666' }} />
+                      {getTargetIcon(program.target)}
+                      <Typography variant="caption" color="text.secondary" fontWeight={500}>
+                        {program.target}
+                      </Typography>
+                    </Stack>
+                  </Stack>
+
+                  <Typography variant="h6" gutterBottom fontWeight={600} color="primary.dark" sx={{ lineHeight: 1.3 }}>
+                    {program.title}
+                  </Typography>
+                  
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 3, lineHeight: 1.6 }}>
+                    {program.description}
+                  </Typography>
+
+                  <Stack spacing={2} sx={{ mb: 3 }}>
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                      <CalendarTodayIcon sx={{ fontSize: 16, color: 'primary.main' }} />
                       <Typography variant="body2" color="text.secondary">
-                        {new Date(program.date).toLocaleDateString('vi-VN')}
+                        {format(new Date(program.date), 'dd/MM/yyyy')}
                       </Typography>
                     </Stack>
                     <Stack direction="row" alignItems="center" spacing={1}>
-                      <LocationOnIcon sx={{ fontSize: 16, color: '#666' }} />
+                      <LocationOnIcon sx={{ fontSize: 16, color: 'primary.main' }} />
                       <Typography variant="body2" color="text.secondary">
                         {program.location}
                       </Typography>
                     </Stack>
                     <Stack direction="row" alignItems="center" spacing={1}>
-                      <AccessTimeIcon sx={{ fontSize: 16, color: '#666' }} />
+                      <AccessTimeIcon sx={{ fontSize: 16, color: 'primary.main' }} />
                       <Typography variant="body2" color="text.secondary">
-                        {program.duration}
-                </Typography>
+                        Thời gian: {program.duration}
+                      </Typography>
                     </Stack>
                     <Stack direction="row" alignItems="center" spacing={1}>
-                      <GroupsIcon sx={{ fontSize: 16, color: '#666' }} />
+                      <PersonAddIcon sx={{ fontSize: 16, color: 'primary.main' }} />
                       <Typography variant="body2" color="text.secondary">
                         {program.participants}
-                </Typography>
+                      </Typography>
                     </Stack>
                   </Stack>
-                </Box>
 
-                <Box sx={{ mt: 'auto' }}>
-                  <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
+                  <Stack direction="row" spacing={1} sx={{ mt: 'auto' }}>
                     <Button
-                      size="small"
-                      variant="outlined"
-                      startIcon={<PollIcon />}
-                      onClick={() => handleSurveyOpen(program, 'pre')}
-                      sx={{ 
-                        borderColor: '#42a5f5',
-                        color: '#42a5f5',
+                      variant="contained"
+                      fullWidth
+                      onClick={() => navigate(`/programs/${program.id}`)}
+                      startIcon={<InfoOutlinedIcon />}
+                      sx={{
+                        py: 1.2,
+                        fontWeight: 600,
+                        backgroundColor: '#2196f3',
                         '&:hover': {
-                          borderColor: '#1976d2',
-                          backgroundColor: '#e3f2fd',
+                          backgroundColor: '#1976d2',
                         },
                       }}
                     >
-                      Khảo sát trước
+                      Chi tiết
                     </Button>
-                    <Button
-                      size="small"
-                      variant="outlined"
-                      startIcon={<PollIcon />}
-                      onClick={() => handleSurveyOpen(program, 'post')}
-                      sx={{ 
-                        borderColor: '#4caf50',
-                        color: '#4caf50',
-                        '&:hover': {
-                          borderColor: '#388e3c',
-                          backgroundColor: '#e8f5e9',
-                        },
-                      }}
-                    >
-                      Khảo sát sau
-                    </Button>
+                    <Tooltip title="Khảo sát trước chương trình">
+                      <IconButton
+                        color="primary"
+                        onClick={() => handleSurveyOpen(program, 'pre')}
+                        sx={{
+                          border: '1px solid',
+                          borderColor: 'primary.main',
+                          '&:hover': {
+                            backgroundColor: 'primary.light',
+                            color: 'white',
+                          },
+                        }}
+                      >
+                        <PollIcon />
+                      </IconButton>
+                    </Tooltip>
                   </Stack>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    startIcon={<InfoOutlinedIcon />}
-                    onClick={() => navigate(`/programs/${program.id}`)}
-                    sx={{
-                      backgroundColor: '#2196f3',
-                      '&:hover': {
-                        backgroundColor: '#1976d2',
-                      },
-                      py: 1.2,
-                      fontSize: '0.95rem',
-                      fontWeight: 600,
-                    }}
-                  >
-                    Xem chi tiết
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </Fade>
           </Grid>
         ))}
       </Grid>
 
       {/* Survey Dialog */}
-      <Dialog 
-        open={openSurvey} 
-        onClose={handleSurveyClose} 
-        maxWidth="md" 
+      <Dialog
+        open={openSurvey}
+        onClose={handleSurveyClose}
+        maxWidth="md"
         fullWidth
         PaperProps={{
-          sx: { borderRadius: 3 }
+          sx: {
+            borderRadius: 3,
+            p: 2,
+          },
         }}
       >
-        <DialogTitle sx={{ pb: 1, backgroundColor: '#f5f5f5' }}>
+        <DialogTitle sx={{ pb: 2 }}>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <PollIcon color="primary" />
+            <PollIcon color="primary" sx={{ fontSize: 32 }} />
             <Box>
-              <Typography variant="h6" fontWeight={600}>
-          {surveyType === 'pre' ? 'Khảo sát trước chương trình' : 'Khảo sát sau chương trình'}
+              <Typography variant="h5" fontWeight={600}>
+                {surveyType === 'pre' ? 'Khảo sát trước chương trình' : 'Khảo sát sau chương trình'}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {selectedProgram?.title}
-              </Typography>
+              {selectedProgram && (
+                <Typography variant="body2" color="text.secondary">
+                  {selectedProgram.title}
+                </Typography>
+              )}
             </Box>
           </Stack>
         </DialogTitle>
-        <DialogContent sx={{ p: 3 }}>
+        <DialogContent>
           {selectedProgram && (
-            <Box>
-              <Alert severity="info" sx={{ mb: 3, borderRadius: 2 }}>
-                Vui lòng trả lời các câu hỏi dưới đây để giúp chúng tôi cải thiện chương trình.
-              </Alert>
-              {(surveyType === 'pre' ? selectedProgram.preSurvey : selectedProgram.postSurvey).map((question, index) => (
-                <Box key={index} sx={{ mb: 3 }}>
-                  <Typography variant="body1" fontWeight={500} sx={{ mb: 2 }}>
-                    {index + 1}. {question}
+            <Stack spacing={3}>
+              {(surveyType === 'pre' ? selectedProgram.preSurvey : selectedProgram.postSurvey).map(
+                (question, index) => (
+                  <Paper key={index} elevation={1} sx={{ p: 3, borderRadius: 2 }}>
+                    <Typography variant="subtitle1" gutterBottom fontWeight={500}>
+                      {index + 1}. {question}
                     </Typography>
                     <RadioGroup
                       value={surveyAnswers[question] || ''}
@@ -423,26 +426,28 @@ const ProgramList = () => {
                     >
                       <FormControlLabel value="yes" control={<Radio />} label="Có" />
                       <FormControlLabel value="no" control={<Radio />} label="Không" />
-                    <FormControlLabel value="maybe" control={<Radio />} label="Có thể" />
+                      <FormControlLabel value="unsure" control={<Radio />} label="Không chắc chắn" />
                     </RadioGroup>
-                  </Box>
-              ))}
-            </Box>
+                  </Paper>
+                )
+              )}
+            </Stack>
           )}
         </DialogContent>
-        <DialogActions sx={{ p: 3, backgroundColor: '#f5f5f5' }}>
-          <Button 
-            onClick={handleSurveyClose} 
+        <DialogActions sx={{ p: 3, pt: 2 }}>
+          <Button
+            onClick={handleSurveyClose}
             startIcon={<CancelIcon />}
-            sx={{ color: '#666' }}
+            sx={{ px: 3 }}
           >
             Hủy
           </Button>
-          <Button 
-            onClick={handleSurveySubmit} 
-            variant="contained" 
+          <Button
+            variant="contained"
+            onClick={handleSurveySubmit}
             startIcon={<SendIcon />}
             sx={{
+              px: 4,
               backgroundColor: '#4caf50',
               '&:hover': {
                 backgroundColor: '#388e3c',

@@ -6,10 +6,12 @@ import Login from './components/auth/Login';
 import PrivateRoute from './components/auth/PrivateRoute';
 import Register from './components/auth/Register';
 import CounselingSchedule from './components/counseling/CounselingSchedule';
+import CounselingMain from './components/counseling/CounselingMain';
 import CounselorDetail from './components/counselors/CounselorDetail';
 import CounselorList from './components/counselors/CounselorList';
 import CourseDetail from './components/courses/CourseDetail';
 import CourseList from './components/courses/CourseList';
+import CourseView from './components/courses/CourseView';
 import Home from './components/home/Home';
 import Layout from './components/layout/Layout';
 import Profile from './components/profile/Profile';
@@ -21,6 +23,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { CounselingProvider } from './contexts/CounselingContext';
 import theme from './theme';
 import AssessmentList from './components/assessment/AssessmentList';
+import AssessmentMain from './components/assessment/AssessmentMain';
 import AssistAssessment from './components/assessment/AssistAssessment';
 import CrafftAssessment from './components/assessment/CrafftAssessment';
 import CounselingList from './components/counseling/CounselingList';
@@ -31,9 +34,9 @@ import AdminDashboard from './components/admin/AdminDashboard';
 import UserManagement from './components/admin/UserManagement';
 import CourseManagement from './components/admin/CourseManagement';
 import AssessmentManagement from './components/admin/AssessmentManagement';
-import CounselingManagement from './components/admin/CounselingManagement';
 import ReportsStatistics from './components/admin/ReportsStatistics';
 import SystemSettings from './components/admin/SystemSettings';
+import MentalHealthAssessment from './components/assessment/MentalHealthAssessment';
 
 // Configure future flags for React Router v7
 const router = {
@@ -70,8 +73,11 @@ function App() {
                 } />
                 <Route path="/courses" element={<CourseList />} />
                 <Route path="/courses/:id" element={<CourseDetail />} />
+                <Route path="/courses/view/:id" element={<CourseView />} />
                 <Route path="/surveys" element={<SurveyList />} />
                 <Route path="/surveys/:id" element={<SurveyDetail />} />
+                <Route path="/counseling-main" element={<CounselingMain />} />
+                <Route path="/assessment-main" element={<AssessmentMain />} />
                 <Route path="/counseling" element={
                   <PrivateRoute>
                     <CounselingList />
@@ -102,6 +108,11 @@ function App() {
                     <CrafftAssessment />
                   </PrivateRoute>
                 } />
+                <Route path="/assessment/mental-health" element={
+                  <PrivateRoute>
+                    <MentalHealthAssessment />
+                  </PrivateRoute>
+                } />
                 <Route path="/programs" element={<ProgramList />} />
                 <Route path="/programs/:id" element={<ProgramDetail />} />
                 <Route path="/counselors" element={<CounselorList />} />
@@ -130,11 +141,12 @@ function App() {
                     <AssessmentManagement />
                   </PrivateRoute>
                 } />
-                <Route path="counseling" element={
+                {/* Counseling Management route commented out since component was deleted */}
+                {/* <Route path="counseling" element={
                   <PrivateRoute>
                     <CounselingManagement />
                   </PrivateRoute>
-                } />
+                } /> */}
                 <Route path="reports" element={
                   <PrivateRoute>
                     <ReportsStatistics />

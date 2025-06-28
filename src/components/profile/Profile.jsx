@@ -24,6 +24,11 @@ import {
   IconButton,
   Badge,
   LinearProgress,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Alert,
 } from '@mui/material';
 import {
   AccountCircle as AccountCircleIcon,
@@ -45,6 +50,9 @@ import {
   EmojiEvents as EmojiEventsIcon,
   Psychology as PsychologyIcon,
   School as SchoolIcon,
+  Star as StarIcon,
+  CalendarToday as CalendarTodayIcon,
+  Person as PersonIcon,
 } from '@mui/icons-material';
 import { useAuth } from '../../contexts/AuthContext';
 import { format } from 'date-fns';
@@ -172,10 +180,11 @@ const Profile = () => {
     <Container maxWidth="lg" sx={{ py: 6 }}>
       {/* Header Section */}
       <Box sx={{ textAlign: 'center', mb: 6 }}>
+        <PersonIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
         <Typography variant="h3" component="h1" gutterBottom fontWeight={700} color="primary.dark">
-            Hồ sơ cá nhân
-          </Typography>
-        <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto' }}>
+          Hồ sơ cá nhân
+        </Typography>
+        <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto', lineHeight: 1.6 }}>
           Quản lý thông tin cá nhân và theo dõi tiến trình học tập của bạn
         </Typography>
       </Box>
@@ -184,451 +193,425 @@ const Profile = () => {
         {/* Profile Card */}
         <Grid item xs={12} md={4}>
           <Card
+            elevation={3}
             sx={{
-              p: 3,
-              textAlign: 'center',
+              borderRadius: 3,
+              overflow: 'hidden',
               height: 'fit-content',
-              background: 'linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)',
-              border: '1px solid rgba(0, 0, 0, 0.05)',
-              borderRadius: 4,
+              background: 'linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%)',
+              border: '1px solid rgba(33, 150, 243, 0.1)',
             }}
           >
-            <Box sx={{ position: 'relative', display: 'inline-block', mb: 3 }}>
-              <Badge
-                overlap="circular"
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                badgeContent={
-                  <IconButton
+            <CardContent sx={{ p: 4, textAlign: 'center' }}>
+              <Box sx={{ position: 'relative', display: 'inline-block', mb: 3 }}>
+                <Badge
+                  overlap="circular"
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  badgeContent={
+                    <IconButton
+                      size="small"
+                      sx={{
+                        backgroundColor: 'primary.main',
+                        color: 'white',
+                        '&:hover': {
+                          backgroundColor: 'primary.dark',
+                        },
+                      }}
+                    >
+                      <CameraAltIcon fontSize="small" />
+                    </IconButton>
+                  }
+                >
+                  <Avatar
+                    src={formData.avatar}
                     sx={{
-                      backgroundColor: 'primary.main',
-                      color: 'white',
-                      width: 32,
-                      height: 32,
-                      '&:hover': {
-                        backgroundColor: 'primary.dark',
-                      },
+                      width: 120,
+                      height: 120,
+                      border: '4px solid white',
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
                     }}
                   >
-                    <CameraAltIcon sx={{ fontSize: 16 }} />
-                  </IconButton>
-                }
+                    <PersonOutlineIcon sx={{ fontSize: 60 }} />
+                  </Avatar>
+                </Badge>
+              </Box>
+
+              <Typography variant="h5" gutterBottom fontWeight={600} color="primary.dark">
+                {formData.name}
+              </Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+                {formData.email}
+              </Typography>
+
+              <Stack spacing={2} sx={{ mb: 3 }}>
+                <Stack direction="row" alignItems="center" spacing={1} justifyContent="center">
+                  <PhoneIcon sx={{ fontSize: 16, color: 'primary.main' }} />
+                  <Typography variant="body2" color="text.secondary">
+                    {formData.phone || 'Chưa cập nhật'}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" alignItems="center" spacing={1} justifyContent="center">
+                  <LocationOnIcon sx={{ fontSize: 16, color: 'primary.main' }} />
+                  <Typography variant="body2" color="text.secondary">
+                    {formData.address || 'Chưa cập nhật'}
+                  </Typography>
+                </Stack>
+              </Stack>
+
+              <Button
+                variant="contained"
+                startIcon={<EditIcon />}
+                onClick={() => setIsEditing(true)}
+                fullWidth
+                sx={{
+                  py: 1.2,
+                  fontWeight: 600,
+                  backgroundColor: '#2196f3',
+                  '&:hover': {
+                    backgroundColor: '#1976d2',
+                  },
+                }}
               >
-                <Avatar
-                  sx={{
-                    width: 120,
-                    height: 120,
-                    border: '4px solid white',
-                    boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
-                    bgcolor: 'primary.main',
-                    fontSize: '3rem',
-                  }}
-                  src={formData.avatar}
-                >
-                  {formData.name?.charAt(0)}
-                </Avatar>
-              </Badge>
-        </Box>
-
-            <Typography variant="h5" fontWeight={700} gutterBottom color="primary.dark">
-              {formData.name}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-              Thành viên từ tháng 1, 2024
-            </Typography>
-
-            {/* Quick Stats */}
-            <Grid container spacing={2} sx={{ mb: 3 }}>
-              <Grid item xs={4}>
-                <Box sx={{ textAlign: 'center' }}>
-                  <Typography variant="h6" fontWeight={700} color="primary.main">
-                    3
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    Khóa học
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box sx={{ textAlign: 'center' }}>
-                  <Typography variant="h6" fontWeight={700} color="success.main">
-                    5
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    Buổi tư vấn
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box sx={{ textAlign: 'center' }}>
-                  <Typography variant="h6" fontWeight={700} color="warning.main">
-                    2
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    Chứng chỉ
-                  </Typography>
-                </Box>
-              </Grid>
-            </Grid>
-
-            <Button
-              variant={isEditing ? "outlined" : "contained"}
-              fullWidth
-              startIcon={isEditing ? <CancelIcon /> : <EditIcon />}
-              onClick={() => setIsEditing(!isEditing)}
-              sx={{
-                borderRadius: 2,
-                py: 1.5,
-                fontWeight: 600,
-              }}
-            >
-              {isEditing ? 'Hủy chỉnh sửa' : 'Chỉnh sửa hồ sơ'}
-            </Button>
+                Chỉnh sửa hồ sơ
+              </Button>
+            </CardContent>
           </Card>
 
-          {/* Achievements Card */}
-          <Card sx={{ mt: 3, p: 3, borderRadius: 4 }}>
-            <Typography variant="h6" fontWeight={700} gutterBottom color="primary.dark">
-              Thành tích
-            </Typography>
-            <Stack spacing={2}>
-              {achievements.map((achievement, index) => (
-                <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <Avatar
-                    sx={{
-                      width: 40,
-                      height: 40,
-                      bgcolor: 'primary.main',
-                    }}
-                  >
-                    {React.cloneElement(achievement.icon, { sx: { fontSize: 20, color: 'white' } })}
-                  </Avatar>
-                  <Box sx={{ flex: 1 }}>
-                    <Typography variant="body2" fontWeight={600}>
-                      {achievement.title}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {format(new Date(achievement.date), 'dd/MM/yyyy')}
-                    </Typography>
-                  </Box>
-                </Box>
-              ))}
-            </Stack>
+          {/* Statistics Card */}
+          <Card elevation={2} sx={{ mt: 3, borderRadius: 3 }}>
+            <CardContent sx={{ p: 3 }}>
+              <Typography variant="h6" gutterBottom fontWeight={600} color="primary.dark">
+                Thống kê hoạt động
+              </Typography>
+              <Stack spacing={2}>
+                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                  <Typography variant="body2" color="text.secondary">Chương trình tham gia:</Typography>
+                  <Typography variant="h6" fontWeight={600} color="primary.main">
+                    {programHistory.length}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                  <Typography variant="body2" color="text.secondary">Buổi tư vấn:</Typography>
+                  <Typography variant="h6" fontWeight={600} color="success.main">
+                    {appointmentHistory.filter(a => a.status === 'completed').length}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                  <Typography variant="body2" color="text.secondary">Thành tích:</Typography>
+                  <Typography variant="h6" fontWeight={600} color="warning.main">
+                    {achievements.length}
+                  </Typography>
+                </Stack>
+              </Stack>
+            </CardContent>
           </Card>
         </Grid>
 
         {/* Main Content */}
         <Grid item xs={12} md={8}>
-          <Paper elevation={2} sx={{ borderRadius: 4, overflow: 'hidden' }}>
+          <Paper elevation={3} sx={{ borderRadius: 3, overflow: 'hidden' }}>
             <Tabs
               value={activeTab}
               onChange={handleTabChange}
-              indicatorColor="primary"
-              textColor="primary"
-              variant="fullWidth"
               sx={{
-                bgcolor: '#f8f9fa',
+                borderBottom: 1,
+                borderColor: 'divider',
+                backgroundColor: '#f8f9fa',
                 '& .MuiTab-root': {
                   fontWeight: 600,
-                  py: 2,
+                  textTransform: 'none',
+                  fontSize: '1rem',
                 },
               }}
             >
-              <Tab 
-                label="Thông tin cá nhân" 
-                icon={<PersonOutlineIcon />} 
-                iconPosition="start"
-              />
-              <Tab 
-                label="Lịch sử tư vấn" 
-                icon={<EventNoteIcon />} 
-                iconPosition="start"
-              />
-              <Tab 
-                label="Chương trình" 
-                icon={<ListAltIcon />} 
-                iconPosition="start"
-              />
-        </Tabs>
+              <Tab label="Thông tin cá nhân" icon={<PersonOutlineIcon />} />
+              <Tab label="Lịch sử tư vấn" icon={<EventNoteIcon />} />
+              <Tab label="Chương trình" icon={<ListAltIcon />} />
+              <Tab label="Thành tích" icon={<EmojiEventsIcon />} />
+            </Tabs>
 
-            <Box sx={{ p: 4 }}>
-              {/* Personal Information Tab */}
-              <TabPanel value={activeTab} index={0}>
-                <Box component="form" onSubmit={handleSubmit}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Họ và tên"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                        variant="outlined"
-                        disabled={!isEditing}
-                        InputProps={{
-                          startAdornment: <PersonOutlineIcon sx={{ mr: 1, color: 'text.secondary' }} />,
-                        }}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                        variant="outlined"
-                        disabled
-                        InputProps={{
-                          startAdornment: <EmailIcon sx={{ mr: 1, color: 'text.secondary' }} />,
-                        }}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Số điện thoại"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                        variant="outlined"
-                        disabled={!isEditing}
-                        placeholder="Nhập số điện thoại"
-                        InputProps={{
-                          startAdornment: <PhoneIcon sx={{ mr: 1, color: 'text.secondary' }} />,
-                        }}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Địa chỉ"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                        variant="outlined"
-                        disabled={!isEditing}
-                        placeholder="Nhập địa chỉ"
-                        InputProps={{
-                          startAdornment: <LocationOnIcon sx={{ mr: 1, color: 'text.secondary' }} />,
-                        }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                      <TextField
-                        fullWidth
-                        label="Giới thiệu bản thân"
-                        name="bio"
-                        value={formData.bio}
-                        onChange={handleChange}
-                        variant="outlined"
-                        disabled={!isEditing}
-                        multiline
-                        rows={4}
-                        placeholder="Chia sẻ một chút về bản thân bạn..."
-                        InputProps={{
-                          startAdornment: <DescriptionIcon sx={{ mr: 1, color: 'text.secondary', alignSelf: 'flex-start', mt: 1 }} />,
-                        }}
-                      />
-              </Grid>
-            </Grid>
-                  
-                  {isEditing && (
-                    <Box sx={{ mt: 4, display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-                      <Button
-                        variant="outlined"
-                        onClick={() => setIsEditing(false)}
-                        startIcon={<CancelIcon />}
-                      >
-                        Hủy
-                      </Button>
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        startIcon={<SaveIcon />}
-                        sx={{
-                          background: 'linear-gradient(135deg, #4caf50 0%, #2e7d32 100%)',
-                          '&:hover': {
-                            background: 'linear-gradient(135deg, #388e3c 0%, #1b5e20 100%)',
-                          },
-                        }}
-                      >
-                        Lưu thay đổi
-                      </Button>
-                    </Box>
-                  )}
-                </Box>
-              </TabPanel>
-
-              {/* Appointment History Tab */}
-              <TabPanel value={activeTab} index={1}>
-                <Stack spacing={3}>
-                {appointmentHistory.map((appointment) => (
-                    <Card 
-                      key={appointment.id} 
-                      variant="outlined" 
-                      sx={{ 
-                        p: 3, 
-                        borderRadius: 3,
-                        '&:hover': {
-                          boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
-                        },
-                        transition: 'all 0.2s ease',
-                      }}
-                    >
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-                        <Box>
-                          <Typography variant="h6" fontWeight={600} gutterBottom>
-                            {appointment.topic}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            Tư vấn viên: {appointment.counselor}
-                          </Typography>
-                        </Box>
-                        {getStatusChip(appointment.status)}
-                      </Box>
-                      
-                      <Divider sx={{ my: 2 }} />
-                      
-                      <Grid container spacing={2} alignItems="center">
-                        <Grid item xs={6} md={3}>
-                          <Typography variant="caption" color="text.secondary">
-                            Ngày
-                          </Typography>
-                          <Typography variant="body2" fontWeight={500}>
-                            {format(new Date(appointment.date), 'dd/MM/yyyy')}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={6} md={3}>
-                          <Typography variant="caption" color="text.secondary">
-                            Giờ
-                          </Typography>
-                          <Typography variant="body2" fontWeight={500}>
-                            {appointment.time}
-                          </Typography>
-                        </Grid>
-                        {appointment.rating && (
-                          <Grid item xs={12} md={6}>
-                            <Typography variant="caption" color="text.secondary">
-                              Đánh giá
-                            </Typography>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                              <Typography variant="body2" fontWeight={500}>
-                                {appointment.rating}/5
-                              </Typography>
-                              <Box sx={{ display: 'flex' }}>
-                                {[...Array(5)].map((_, i) => (
-                                  <Typography 
-                                    key={i} 
-                                    sx={{ 
-                                      color: i < appointment.rating ? '#ffc107' : '#e0e0e0',
-                                      fontSize: '1rem',
-                                    }}
-                                  >
-                                    ★
-                                  </Typography>
-                                ))}
-                              </Box>
-                            </Box>
-                          </Grid>
-                        )}
+            {/* Personal Information Tab */}
+            <TabPanel value={activeTab} index={0}>
+              <Box sx={{ p: 4 }}>
+                {isEditing ? (
+                  <form onSubmit={handleSubmit}>
+                    <Grid container spacing={3}>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          fullWidth
+                          label="Họ và tên"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          required
+                        />
                       </Grid>
-                    </Card>
-                  ))}
-                </Stack>
-              </TabPanel>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          fullWidth
+                          label="Email"
+                          name="email"
+                          type="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          required
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          fullWidth
+                          label="Số điện thoại"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          fullWidth
+                          label="Địa chỉ"
+                          name="address"
+                          value={formData.address}
+                          onChange={handleChange}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          label="Mô tả bản thân"
+                          name="bio"
+                          multiline
+                          rows={4}
+                          value={formData.bio}
+                          onChange={handleChange}
+                          placeholder="Viết vài dòng về bản thân..."
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Stack direction="row" spacing={2}>
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            startIcon={<SaveIcon />}
+                            sx={{
+                              backgroundColor: '#4caf50',
+                              '&:hover': {
+                                backgroundColor: '#388e3c',
+                              },
+                            }}
+                          >
+                            Lưu thay đổi
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            startIcon={<CancelIcon />}
+                            onClick={() => setIsEditing(false)}
+                          >
+                            Hủy
+                          </Button>
+                        </Stack>
+                      </Grid>
+                    </Grid>
+                  </form>
+                ) : (
+                  <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                      <Alert severity="info" sx={{ mb: 3 }}>
+                        Thông tin cá nhân của bạn được bảo mật và chỉ được sử dụng để cải thiện dịch vụ.
+                      </Alert>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Stack spacing={1}>
+                        <Typography variant="body2" color="text.secondary">Họ và tên</Typography>
+                        <Typography variant="body1" fontWeight={500}>{formData.name}</Typography>
+                      </Stack>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Stack spacing={1}>
+                        <Typography variant="body2" color="text.secondary">Email</Typography>
+                        <Typography variant="body1" fontWeight={500}>{formData.email}</Typography>
+                      </Stack>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Stack spacing={1}>
+                        <Typography variant="body2" color="text.secondary">Số điện thoại</Typography>
+                        <Typography variant="body1" fontWeight={500}>
+                          {formData.phone || 'Chưa cập nhật'}
+                        </Typography>
+                      </Stack>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Stack spacing={1}>
+                        <Typography variant="body2" color="text.secondary">Địa chỉ</Typography>
+                        <Typography variant="body1" fontWeight={500}>
+                          {formData.address || 'Chưa cập nhật'}
+                        </Typography>
+                      </Stack>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Stack spacing={1}>
+                        <Typography variant="body2" color="text.secondary">Mô tả bản thân</Typography>
+                        <Typography variant="body1" fontWeight={500} sx={{ lineHeight: 1.6 }}>
+                          {formData.bio || 'Chưa có mô tả'}
+                        </Typography>
+                      </Stack>
+                    </Grid>
+                  </Grid>
+                )}
+              </Box>
+            </TabPanel>
 
-              {/* Program History Tab */}
-              <TabPanel value={activeTab} index={2}>
+            {/* Appointment History Tab */}
+            <TabPanel value={activeTab} index={1}>
+              <Box sx={{ p: 4 }}>
+                <Typography variant="h6" gutterBottom fontWeight={600} color="primary.dark">
+                  Lịch sử tư vấn
+                </Typography>
+                <TableContainer>
+                  <Table>
+                    <TableHead>
+                      <TableRow sx={{ backgroundColor: '#f8f9fa' }}>
+                        <TableCell fontWeight={600}>Tư vấn viên</TableCell>
+                        <TableCell fontWeight={600}>Ngày</TableCell>
+                        <TableCell fontWeight={600}>Chủ đề</TableCell>
+                        <TableCell fontWeight={600}>Trạng thái</TableCell>
+                        <TableCell fontWeight={600}>Đánh giá</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {appointmentHistory.map((appointment) => (
+                        <TableRow key={appointment.id} hover>
+                          <TableCell>{appointment.counselor}</TableCell>
+                          <TableCell>
+                            {format(new Date(appointment.date), 'dd/MM/yyyy')} - {appointment.time}
+                          </TableCell>
+                          <TableCell>{appointment.topic}</TableCell>
+                          <TableCell>{getStatusChip(appointment.status)}</TableCell>
+                          <TableCell>
+                            {appointment.rating ? (
+                              <Stack direction="row" alignItems="center" spacing={0.5}>
+                                {[...Array(5)].map((_, i) => (
+                                  <StarIcon
+                                    key={i}
+                                    sx={{
+                                      fontSize: 16,
+                                      color: i < appointment.rating ? '#ffc107' : '#e0e0e0',
+                                    }}
+                                  />
+                                ))}
+                              </Stack>
+                            ) : (
+                              <Typography variant="body2" color="text.secondary">
+                                Chưa đánh giá
+                              </Typography>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Box>
+            </TabPanel>
+
+            {/* Program History Tab */}
+            <TabPanel value={activeTab} index={2}>
+              <Box sx={{ p: 4 }}>
+                <Typography variant="h6" gutterBottom fontWeight={600} color="primary.dark">
+                  Chương trình đã tham gia
+                </Typography>
                 <Stack spacing={3}>
-                {programHistory.map((program) => (
-                    <Card 
-                      key={program.id} 
-                      variant="outlined" 
-                      sx={{ 
-                        p: 3, 
-                        borderRadius: 3,
-                        '&:hover': {
-                          boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
-                        },
-                        transition: 'all 0.2s ease',
-                      }}
-                    >
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-                        <Box sx={{ flex: 1 }}>
-                          <Typography variant="h6" fontWeight={600} gutterBottom>
+                  {programHistory.map((program) => (
+                    <Card key={program.id} elevation={1} sx={{ borderRadius: 2 }}>
+                      <CardContent sx={{ p: 3 }}>
+                        <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 2 }}>
+                          <Typography variant="h6" fontWeight={600} color="primary.dark">
                             {program.title}
                           </Typography>
-                          <Typography variant="body2" color="text.secondary" gutterBottom>
-                            Ngày tham gia: {format(new Date(program.date), 'dd/MM/yyyy')}
+                          {getStatusChip(program.status)}
+                        </Stack>
+                        <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
+                          <CalendarTodayIcon sx={{ fontSize: 16, color: 'primary.main' }} />
+                          <Typography variant="body2" color="text.secondary">
+                            {format(new Date(program.date), 'dd/MM/yyyy')}
                           </Typography>
-                        </Box>
-                        {getStatusChip(program.status)}
-                      </Box>
-
-                      {program.progress > 0 && (
-                        <Box sx={{ mb: 2 }}>
-                          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                            <Typography variant="caption" color="text.secondary">
+                        </Stack>
+                        {program.status === 'completed' && (
+                          <Box sx={{ mt: 2 }}>
+                            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                               Tiến độ hoàn thành
                             </Typography>
-                            <Typography variant="caption" fontWeight={600}>
+                            <LinearProgress
+                              variant="determinate"
+                              value={program.progress}
+                              sx={{
+                                height: 8,
+                                borderRadius: 4,
+                                backgroundColor: '#e0e0e0',
+                                '& .MuiLinearProgress-bar': {
+                                  borderRadius: 4,
+                                },
+                              }}
+                            />
+                            <Typography variant="body2" color="primary.main" sx={{ mt: 1, textAlign: 'right' }}>
                               {program.progress}%
                             </Typography>
                           </Box>
-                          <LinearProgress 
-                            variant="determinate" 
-                            value={program.progress} 
-                            sx={{ 
-                              height: 8, 
-                              borderRadius: 4,
-                              bgcolor: '#e0e0e0',
-                              '& .MuiLinearProgress-bar': {
-                                borderRadius: 4,
-                              },
-                            }}
-                          />
-                        </Box>
-                      )}
-
-                      <Divider sx={{ my: 2 }} />
-
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} md={3}>
-                          <Typography variant="caption" color="text.secondary">
-                            Khảo sát trước
-                          </Typography>
-                          <Typography variant="body2" fontWeight={500}>
-                            {program.preSurvey ? '✅ Đã hoàn thành' : '⏳ Chưa thực hiện'}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={6} md={3}>
-                          <Typography variant="caption" color="text.secondary">
-                            Khảo sát sau
-                          </Typography>
-                          <Typography variant="body2" fontWeight={500}>
-                            {program.postSurvey ? '✅ Đã hoàn thành' : '⏳ Chưa thực hiện'}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={6} md={3}>
-                          <Typography variant="caption" color="text.secondary">
-                            Chứng chỉ
-                          </Typography>
-                          <Typography variant="body2" fontWeight={500}>
-                            {program.certificate ? '🏆 Đã nhận' : '⏳ Chưa đủ điều kiện'}
-                          </Typography>
-                        </Grid>
-                      </Grid>
+                        )}
+                      </CardContent>
                     </Card>
-                ))}
+                  ))}
                 </Stack>
-              </TabPanel>
-            </Box>
-      </Paper>
+              </Box>
+            </TabPanel>
+
+            {/* Achievements Tab */}
+            <TabPanel value={activeTab} index={3}>
+              <Box sx={{ p: 4 }}>
+                <Typography variant="h6" gutterBottom fontWeight={600} color="primary.dark">
+                  Thành tích đạt được
+                </Typography>
+                <List>
+                  {achievements.map((achievement, index) => (
+                    <ListItem key={index} sx={{ py: 2 }}>
+                      <ListItemIcon>
+                        <Box
+                          sx={{
+                            width: 48,
+                            height: 48,
+                            borderRadius: '50%',
+                            backgroundColor: 'warning.light',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: 'warning.dark',
+                          }}
+                        >
+                          {achievement.icon}
+                        </Box>
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={
+                          <Typography variant="body1" fontWeight={600}>
+                            {achievement.title}
+                          </Typography>
+                        }
+                        secondary={
+                          <Typography variant="body2" color="text.secondary">
+                            {format(new Date(achievement.date), 'dd/MM/yyyy')}
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              </Box>
+            </TabPanel>
+          </Paper>
         </Grid>
       </Grid>
     </Container>
   );
 };
 
-export default Profile; 
+export default Profile;
